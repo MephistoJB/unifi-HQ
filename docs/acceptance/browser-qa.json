@@ -1,0 +1,77 @@
+{
+  "results": [
+    {
+      "label": "ipad9-portrait",
+      "view": "tree",
+      "title": "Netzwerkbaum · UniFi HQ",
+      "width": 810,
+      "overflow": false,
+      "bodyWidth": 795,
+      "notice": "Demo · simulierte Geräte, Statuswerte und Verbindungen.",
+      "rows": 11,
+      "buttons": []
+    },
+    {
+      "label": "ipad9-portrait",
+      "view": "devices",
+      "title": "Geräte · UniFi HQ",
+      "width": 810,
+      "overflow": false,
+      "bodyWidth": 795,
+      "notice": "Demo · simulierte Geräte, Statuswerte und Verbindungen.",
+      "rows": 81,
+      "buttons": []
+    },
+    {
+      "label": "ipad9-landscape",
+      "view": "tree",
+      "title": "Netzwerkbaum · UniFi HQ",
+      "width": 1080,
+      "overflow": false,
+      "bodyWidth": 1065,
+      "notice": "Demo · simulierte Geräte, Statuswerte und Verbindungen.",
+      "rows": 11,
+      "buttons": []
+    },
+    {
+      "label": "ipad9-landscape",
+      "view": "devices",
+      "title": "Geräte · UniFi HQ",
+      "width": 1080,
+      "overflow": false,
+      "bodyWidth": 1065,
+      "notice": "Demo · simulierte Geräte, Statuswerte und Verbindungen.",
+      "rows": 81,
+      "buttons": []
+    },
+    {
+      "label": "desktop",
+      "view": "tree",
+      "title": "Netzwerkbaum · UniFi HQ",
+      "width": 1440,
+      "overflow": false,
+      "bodyWidth": 1425,
+      "notice": "Demo · simulierte Geräte, Statuswerte und Verbindungen.",
+      "rows": 0,
+      "buttons": []
+    },
+    {
+      "label": "desktop",
+      "view": "devices",
+      "title": "Geräte · UniFi HQ",
+      "width": 1440,
+      "overflow": false,
+      "bodyWidth": 1425,
+      "notice": "Demo · simulierte Geräte, Statuswerte und Verbindungen.",
+      "rows": 81,
+      "buttons": []
+    },
+    {
+      "filter": {
+        "results": "7 von 81 Geräten",
+        "text": "GERÄT\nSTATUS\nIP-ADRESSE\nANSCHLUSS\nDisplay 28\nClient · Demo-Gerät\nOffline\n198.51.100.28\nTechnik-Switch (zuletzt)\nLaptop 37\nClient · Demo-Gerät\nOffline\n198.51.100"
+      }
+    }
+  ],
+  "errors": []
+}

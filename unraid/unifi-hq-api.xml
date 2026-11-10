@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Container version="2">
+  <Name>unifi-hq-api</Name>
+  <Repository>ghcr.io/mephistojb/unifi-hq-api:0.1.0</Repository>
+  <Registry>https://github.com/MephistoJB/unifi-HQ</Registry>
+  <Network>host</Network>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/MephistoJB/unifi-HQ/issues</Support>
+  <Project>https://github.com/MephistoJB/unifi-HQ</Project>
+  <Overview>UniFi HQ Login, Gerätenamen und Controller-Inventar. Erst nach Collector starten. Secret-Verzeichnis auf dem Zielhost bereitstellen; keine Kennwörter/API-Keys in Template-Variablen eintragen.</Overview>
+  <Category>Network:Management:</Category>
+  <WebUI />
+  <Icon>https://raw.githubusercontent.com/MephistoJB/unifi-HQ/main/web/favicon.svg</Icon>
+  <ExtraParams>--read-only --cap-drop=ALL --security-opt=no-new-privileges:true --restart=unless-stopped --log-driver=local --log-opt=max-size=5m --log-opt=max-file=2 --label=io.unifi-hq.stack=unifi-hq --memory=128m --user=0:0 --cap-add=KILL --pid=container:unifi-hq-collector</ExtraParams>
+  <PostArgs />
+  <TemplateURL>https://raw.githubusercontent.com/MephistoJB/unifi-HQ/main/unraid/unifi-hq-api.xml</TemplateURL>
+  <Config Name="Gerätenamen" Target="/config" Default="/mnt/user/appdata/unifi-hq/config" Mode="rw" Description="" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/unifi-hq/config</Config>
+  <Config Name="Inventar" Target="/state" Default="/mnt/user/appdata/unifi-hq/state" Mode="rw" Description="" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/unifi-hq/state</Config>
+  <Config Name="Runtime-Secrets" Target="/run/secrets" Default="/run/unifi-hq-secrets" Mode="ro" Description="" Type="Path" Display="always" Required="true" Mask="false">/run/unifi-hq-secrets</Config>
+  <Config Name="TZ" Target="TZ" Default="Europe/Berlin" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">Europe/Berlin</Config>
+  <Config Name="HOSTS_FILE" Target="HOSTS_FILE" Default="/config/hosts.csv" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">/config/hosts.csv</Config>
+  <Config Name="LISTEN" Target="LISTEN" Default="127.0.0.1:8092" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">127.0.0.1:8092</Config>
+  <Config Name="AUTH_PASSWORD_HASH_FILE" Target="AUTH_PASSWORD_HASH_FILE" Default="/run/secrets/auth_password_hash" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">/run/secrets/auth_password_hash</Config>
+  <Config Name="AUTH_SECRET_FILE" Target="AUTH_SECRET_FILE" Default="/run/secrets/auth_secret" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">/run/secrets/auth_secret</Config>
+  <Config Name="UNIFI_API_KEY_FILE" Target="UNIFI_API_KEY_FILE" Default="/run/secrets/unifi_api_key" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">/run/secrets/unifi_api_key</Config>
+  <Config Name="UNIFI_URL" Target="UNIFI_URL" Default="" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="false" Mask="false" />
+  <Config Name="UNIFI_SITE_ID" Target="UNIFI_SITE_ID" Default="" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="false" Mask="false" />
+  <Config Name="UNIFI_API_BASE_PATH" Target="UNIFI_API_BASE_PATH" Default="/proxy/network/integration/v1" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">/proxy/network/integration/v1</Config>
+  <Config Name="UNIFI_CA_FILE" Target="UNIFI_CA_FILE" Default="" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="false" Mask="false" />
+  <Config Name="UNIFI_POLL_SECONDS" Target="UNIFI_POLL_SECONDS" Default="15" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">15</Config>
+  <Config Name="UNIFI_STALE_SECONDS" Target="UNIFI_STALE_SECONDS" Default="60" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">60</Config>
+  <Config Name="INVENTORY_FILE" Target="INVENTORY_FILE" Default="/state/inventory.json" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">/state/inventory.json</Config>
+</Container>

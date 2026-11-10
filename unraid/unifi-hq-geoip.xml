@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Container version="2">
+  <Name>unifi-hq-geoip</Name>
+  <Repository>alpine:3.24</Repository>
+  <Registry>https://github.com/MephistoJB/unifi-HQ</Registry>
+  <Network>host</Network>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/MephistoJB/unifi-HQ/issues</Support>
+  <Project>https://github.com/MephistoJB/unifi-HQ</Project>
+  <Overview>UniFi HQ GeoIP-Einmaljob. Vor dem ersten Collector-Start ausführen; bei Erfolg beendet. Autostart deaktiviert lassen. Keine Host-Paketinstallation erforderlich.</Overview>
+  <Category>Network:Management:</Category>
+  <WebUI />
+  <Icon>https://raw.githubusercontent.com/MephistoJB/unifi-HQ/main/web/favicon.svg</Icon>
+  <ExtraParams>--read-only --cap-drop=ALL --security-opt=no-new-privileges:true --log-driver=local --log-opt=max-size=5m --log-opt=max-file=2 --label=io.unifi-hq.stack=unifi-hq --memory=128m</ExtraParams>
+  <PostArgs>/bin/sh /update.sh</PostArgs>
+  <TemplateURL>https://raw.githubusercontent.com/MephistoJB/unifi-HQ/main/unraid/unifi-hq-geoip.xml</TemplateURL>
+  <Config Name="GeoIP-Daten" Target="/geoip" Default="/mnt/user/appdata/unifi-hq/geoip" Mode="rw" Description="" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/unifi-hq/geoip</Config>
+  <Config Name="GeoIP-Updateskript" Target="/update.sh" Default="/mnt/user/appdata/unifi-hq/source/scripts/geoip-update.sh" Mode="ro" Description="" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/unifi-hq/source/scripts/geoip-update.sh</Config>
+  <Config Name="GEOIP_MAX_AGE_DAYS" Target="GEOIP_MAX_AGE_DAYS" Default="32" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">32</Config>
+</Container>

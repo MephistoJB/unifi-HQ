@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Container version="2">
+  <Name>unifi-hq-web</Name>
+  <Repository>ghcr.io/mephistojb/unifi-hq-web:0.1.0</Repository>
+  <Registry>https://github.com/MephistoJB/unifi-HQ</Registry>
+  <Network>host</Network>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/MephistoJB/unifi-HQ/issues</Support>
+  <Project>https://github.com/MephistoJB/unifi-HQ</Project>
+  <Overview>UniFi HQ: Live-Weltkarte, Netzwerkbaum und Geräteverfügbarkeit. GPL-Fork von ProfessorQuantumUniverse/unifi-HQ. Zuletzt starten, nur im freigegebenen lokalen Netz öffnen.</Overview>
+  <Category>Network:Management:</Category>
+  <WebUI>http://[IP]:8080/</WebUI>
+  <Icon>https://raw.githubusercontent.com/MephistoJB/unifi-HQ/main/web/favicon.svg</Icon>
+  <ExtraParams>--read-only --cap-drop=ALL --security-opt=no-new-privileges:true --restart=unless-stopped --log-driver=local --log-opt=max-size=5m --log-opt=max-file=2 --label=io.unifi-hq.stack=unifi-hq --memory=64m --tmpfs=/data:size=1m --tmpfs=/config:size=1m</ExtraParams>
+  <PostArgs />
+  <TemplateURL>https://raw.githubusercontent.com/MephistoJB/unifi-HQ/main/unraid/unifi-hq-web.xml</TemplateURL>
+  <Config Name="HTTP_PORT" Target="HTTP_PORT" Default="8080" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">8080</Config>
+  <Config Name="API_PORT" Target="API_PORT" Default="8092" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">8092</Config>
+  <Config Name="LIVE_PORT" Target="LIVE_PORT" Default="8090" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">8090</Config>
+  <Config Name="HISTORY_PORT" Target="HISTORY_PORT" Default="9428" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">9428</Config>
+  <Config Name="ALLOWED_CLIENTS" Target="ALLOWED_CLIENTS" Default="private_ranges" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">private_ranges</Config>
+  <Config Name="HOME_LAT" Target="HOME_LAT" Default="50.11" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">50.11</Config>
+  <Config Name="HOME_LON" Target="HOME_LON" Default="8.68" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">8.68</Config>
+  <Config Name="HOME_LABEL" Target="HOME_LABEL" Default="Home" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">Home</Config>
+  <Config Name="GATEWAY_NAME" Target="GATEWAY_NAME" Default="Gateway" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">Gateway</Config>
+</Container>

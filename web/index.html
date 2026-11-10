@@ -8,6 +8,7 @@
 <title>Lagezentrum</title>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="hq-shell.css">
 </head>
 <body>
 <div id="globe" role="img" aria-label="World map with live connections"></div>
@@ -15,7 +16,8 @@
 <div class="flat-tip float-tooltip-kap" id="flatTip" hidden></div>
 
 <header>
-  <h1>Lagezentrum<small id="gwName"></small></h1>
+  <h1>UniFi HQ<small id="gwName"></small></h1>
+  <nav class="hq-live-nav" aria-label="Hauptnavigation"><a href="./" aria-current="page">Weltkarte</a><a href="inventory.html?view=tree" id="inventoryTreeLink">Netzwerkbaum</a><a href="inventory.html?view=devices" id="inventoryDevicesLink">Geräte</a></nav>
   <div class="status" id="status" data-state="connecting"><span class="dot"></span><span id="statusText">Connecting …</span></div>
   <div class="filters" role="group" aria-label="Filter view">
     <button class="chip" data-f="out" aria-pressed="true"><i class="c-out"></i>Out</button>
@@ -25,7 +27,7 @@
     <button class="chip" data-f="dns" aria-pressed="false"><i class="c-mute"></i>DNS</button>
   </div>
   <button class="tool" id="openCountries" title="All countries at a glance">Countries</button>
-  <button class="tool" id="openDevices" title="Devices and names">Devices</button>
+  <button class="tool" id="openDevices" title="Traffic-Geräte und IP-Namen">Traffic-Geräte</button>
   <button class="tool" id="openHistory" title="Search history (/)">History</button>
   <button class="tool icon" id="openSettings" title="Settings" aria-label="Settings" aria-controls="settings">⚙</button>
   <div class="settings" id="settings" hidden role="dialog" aria-label="Settings">
@@ -78,6 +80,7 @@
     <div class="opt account" id="logoutRow" hidden><button type="button" class="tool" id="logout">Log out</button><small>Logs out this browser only.</small></div>
   </div>
   <div class="clock" id="clock">--:--:--</div>
+  <span class="hq-map-fallback" id="mapFallback" role="status" hidden></span>
 </header>
 
 <aside class="panel" id="left">

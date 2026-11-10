@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Container version="2">
+  <Name>unifi-hq-history</Name>
+  <Repository>victoriametrics/victoria-logs:v1.53.0</Repository>
+  <Registry>https://github.com/MephistoJB/unifi-HQ</Registry>
+  <Network>host</Network>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/MephistoJB/unifi-HQ/issues</Support>
+  <Project>https://github.com/MephistoJB/unifi-HQ</Project>
+  <Overview>UniFi HQ Verlaufsspeicher. Nur localhost. Zuerst starten; Daten bleiben bei Neuinstallation erhalten.</Overview>
+  <Category>Network:Management:</Category>
+  <WebUI />
+  <Icon>https://raw.githubusercontent.com/MephistoJB/unifi-HQ/main/web/favicon.svg</Icon>
+  <ExtraParams>--read-only --cap-drop=ALL --security-opt=no-new-privileges:true --restart=unless-stopped --log-driver=local --log-opt=max-size=5m --log-opt=max-file=2 --label=io.unifi-hq.stack=unifi-hq --memory=512m</ExtraParams>
+  <PostArgs>-httpListenAddr=127.0.0.1:9428 -storageDataPath=/vlogs -retentionPeriod=30d -retention.maxDiskSpaceUsageBytes=20GiB -inmemoryDataFlushInterval=30s -loggerLevel=WARN -search.maxQueryDuration=60s</PostArgs>
+  <TemplateURL>https://raw.githubusercontent.com/MephistoJB/unifi-HQ/main/unraid/unifi-hq-history.xml</TemplateURL>
+  <Config Name="Verlauf" Target="/vlogs" Default="/mnt/user/appdata/unifi-hq/history" Mode="rw" Description="" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/unifi-hq/history</Config>
+</Container>

@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Container version="2">
+  <Name>unifi-hq-collector</Name>
+  <Repository>ghcr.io/mephistojb/unifi-hq-collector:0.1.0</Repository>
+  <Registry>https://github.com/MephistoJB/unifi-HQ</Registry>
+  <Network>host</Network>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/MephistoJB/unifi-HQ/issues</Support>
+  <Project>https://github.com/MephistoJB/unifi-HQ</Project>
+  <Overview>UniFi HQ IPFIX/Syslog-Collector. Nach GeoIP-Initialisierung und Verlaufsspeicher starten. Nach Neuerstellung muss auch unifi-hq-api neu erstellt werden.</Overview>
+  <Category>Network:Management:</Category>
+  <WebUI />
+  <Icon>https://raw.githubusercontent.com/MephistoJB/unifi-HQ/main/web/favicon.svg</Icon>
+  <ExtraParams>--read-only --cap-drop=ALL --security-opt=no-new-privileges:true --restart=unless-stopped --log-driver=local --log-opt=max-size=5m --log-opt=max-file=2 --label=io.unifi-hq.stack=unifi-hq --memory=384m --tmpfs=/var/lib/vector:uid=65534,gid=65534,size=16m</ExtraParams>
+  <PostArgs />
+  <TemplateURL>https://raw.githubusercontent.com/MephistoJB/unifi-HQ/main/unraid/unifi-hq-collector.xml</TemplateURL>
+  <Config Name="Gerätenamen" Target="/etc/vector/config" Default="/mnt/user/appdata/unifi-hq/config" Mode="ro" Description="" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/unifi-hq/config</Config>
+  <Config Name="GeoIP-Daten" Target="/geoip" Default="/mnt/user/appdata/unifi-hq/geoip" Mode="ro" Description="" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/unifi-hq/geoip</Config>
+  <Config Name="TZ" Target="TZ" Default="Europe/Berlin" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">Europe/Berlin</Config>
+  <Config Name="VECTOR_LOG" Target="VECTOR_LOG" Default="warn" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">warn</Config>
+  <Config Name="VECTOR_THREADS" Target="VECTOR_THREADS" Default="1" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">1</Config>
+  <Config Name="WAN_IP" Target="WAN_IP" Default="" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="false" Mask="false" />
+  <Config Name="ALLOWED_SENDERS" Target="ALLOWED_SENDERS" Default="127.0.0.1" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">127.0.0.1</Config>
+  <Config Name="LOCAL_EXTRA_NETS" Target="LOCAL_EXTRA_NETS" Default="" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="false" Mask="false" />
+  <Config Name="LOCAL_SERVER_PORTS" Target="LOCAL_SERVER_PORTS" Default="51820" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">51820</Config>
+  <Config Name="IGNORE_IPS" Target="IGNORE_IPS" Default="" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="false" Mask="false" />
+  <Config Name="IPFIX_PORT" Target="IPFIX_PORT" Default="2055" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">2055</Config>
+  <Config Name="SYSLOG_PORT" Target="SYSLOG_PORT" Default="5514" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">5514</Config>
+  <Config Name="LIVE_PORT" Target="LIVE_PORT" Default="8090" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">8090</Config>
+  <Config Name="METRICS_PORT" Target="METRICS_PORT" Default="8091" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">8091</Config>
+  <Config Name="HISTORY_PORT" Target="HISTORY_PORT" Default="9428" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">9428</Config>
+</Container>

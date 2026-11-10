@@ -183,7 +183,13 @@ func main() {
 	}
 	s := &store{path: env("HOSTS_FILE", "/config/hosts.csv")}
 	addr := env("LISTEN", "127.0.0.1:8092")
-	auth := newAuth(os.Getenv("AUTH_PASSWORD_HASH"), os.Getenv("AUTH_SECRET"))
+	passwordHash, hashErr := secretValue("AUTH_PASSWORD_HASH")
+	authSecret, secretErr := secretValue("AUTH_SECRET")
+	if hashErr != nil || secretErr != nil {
+		// Missing runtime-secret mounts must fail closed, never disable login.
+		log.Fatal("Authentifizierungsdatei fehlt oder kann nicht gelesen werden")
+	}
+	auth := newAuth(passwordHash, authSecret)
 	switch {
 	case auth.bad != nil:
 		log.Printf("FEHLER: AUTH_PASSWORD_HASH ungültig (%v) – Dashboard gesperrt, bis ./lagezentrum.sh password ein neues Passwort setzt", auth.bad)
@@ -195,6 +201,7 @@ func main() {
 
 	mux := http.NewServeMux()
 	auth.routes(mux)
+	startInventory(mux, auth)
 	mux.HandleFunc("GET /api/health", func(w http.ResponseWriter, r *http.Request) {
 		jsonOut(w, 200, map[string]string{"status": "ok"})
 	})

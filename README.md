@@ -1,3 +1,19 @@
+# UniFi HQ Fork für Docker und Unraid
+
+Dieser freigegebene Fork von [ProfessorQuantumUniverse/unifi-HQ](https://github.com/ProfessorQuantumUniverse/unifi-HQ) ergänzt das ursprüngliche Lagezentrum um einen Netzwerkbaum und eine Geräteübersicht mit Online-, Offline- und Unbekannt-Status. Die Weltkarte und die vorhandene Traffic-Pipeline bleiben die Grundlage. Home Assistant ist für den Betrieb nicht erforderlich.
+
+**Die maßgebliche Installations- und Betriebsanleitung für diesen Fork ist [UniFi HQ auf Unraid](docs/unraid.md).** Für Unraid wird das vorhandene Docker verwendet; ein Compose-Plugin oder ein Unraid-Upgrade wird nicht benötigt.
+
+- Native Installation und Updates: `scripts/unraid.sh`. Ohne `--apply` zeigt das Skript eine Vorschau; es führt keine Installation aus.
+- Unraid-App-Konfiguration: die zusammengehörigen XML-Templates unter [`unraid/`](unraid/), mit eigener WebUI-Verknüpfung.
+- Alternative für Hosts mit bereits vorhandenem Compose: die aktuelle [`docker-compose.yml`](docker-compose.yml).
+- Geheimnisse werden serverseitig über geschützte Runtime-Dateien eingebunden. Keine API-Keys oder Kennwörter in Git, `.env` oder Unraid-Template-Variablen eintragen. Details und Voraussetzungen stehen in der Unraid-Anleitung.
+- Geänderte Bestandteile und Release-Verpackung dieses Forks stehen weiterhin unter der [GNU GPL Version 3](LICENSE); Urheber- und Asset-Lizenzhinweise des Originals bleiben erhalten.
+
+**Die nachfolgende Originaldokumentation bleibt als Upstream-Referenz erhalten.** Ihre Proxmox-/LXC-Installation sowie `install.sh` und die Verwaltungs-/Passwortbefehle von `lagezentrum.sh` beschreiben den ursprünglichen Aufbau und sind keine Installationsanweisung für diesen Fork. Insbesondere wird ein mit dem alten Passwortbefehl in `.env` geschriebener Wert von der aktuellen Runtime-Secret-Konfiguration nicht verwendet. Auch historische Ressourcenwerte und Pfade unten gelten nicht als Messwerte oder Konfiguration des Forks.
+
+## Originaldokumentation von ProfessorQuantumUniverse
+
 # Lagezentrum
 
 Live world map for your home network. Every connection through your UniFi gateway is drawn as an

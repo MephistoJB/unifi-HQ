@@ -1,0 +1,59 @@
+{
+  "assertions": [
+    {
+      "name": "iPad touch opens device detail",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "detail closes",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "collapse toggles",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "touch expanders minimum44",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "search narrows hierarchy",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "diagram zoom changes",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "offline filter",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "missing API shows real error",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "original globe no page overflow",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    }
+  ],
+  "errors": []
+}

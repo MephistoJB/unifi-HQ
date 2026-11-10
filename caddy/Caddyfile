@@ -51,7 +51,7 @@
 		# Seitenaufrufe auf /login.html um, fetch, WebSocket und Abfragen bekommen 401.
 		# Ist kein Passwort gesetzt, lässt sie alles durch.
 		@protected not path /login.html /login.css /login.js /favicon.svg /vendor/* /auth/*
-		forward_auth @protected 127.0.0.1:8092 {
+		forward_auth @protected 127.0.0.1:{$API_PORT:8092} {
 			uri /auth/check
 		}
 
@@ -62,13 +62,13 @@
 			request_body {
 				max_size 4KB
 			}
-			reverse_proxy 127.0.0.1:8092
+			reverse_proxy 127.0.0.1:{$API_PORT:8092}
 		}
 
 		# Live-Stream von Vector (nur 127.0.0.1:8090)
 		handle /ws {
 			rewrite * /
-			reverse_proxy 127.0.0.1:8090
+			reverse_proxy 127.0.0.1:{$LIVE_PORT:8090}
 		}
 
 		# API: Gerätenamen lesen/speichern (nur 127.0.0.1:8092)
@@ -78,7 +78,7 @@
 			request_body {
 				max_size 8KB
 			}
-			reverse_proxy 127.0.0.1:8092
+			reverse_proxy 127.0.0.1:{$API_PORT:8092}
 		}
 
 		# Laufzeit-Einstellungen fürs Dashboard aus der .env
@@ -92,7 +92,7 @@
 		handle /select/* {
 			@write not method GET HEAD POST
 			respond @write 405
-			reverse_proxy 127.0.0.1:9428
+			reverse_proxy 127.0.0.1:{$HISTORY_PORT:9428}
 		}
 
 		# Dashboard

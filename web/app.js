@@ -116,19 +116,42 @@
   // ---------- Globus ----------
   const globeEl = $('globe');
   let world = null;
+  let globeUnavailable = false;
   const arcs = [], rings = [];
   const spots = new Map();
   let dirty = true;
 
   function initGlobe() {
+    const useFlatMap = () => {
+      globeUnavailable = true;
+      world = null;
+      globeEl.replaceChildren();
+      settings.view = 'flat';
+      const globeOption = $('optView').querySelector('option[value="globe"]');
+      if (globeOption) globeOption.disabled = true;
+      $('optView').value = 'flat';
+      $('mapFallback').textContent = 'Flache Karte · 3D auf diesem Gerät nicht verfügbar';
+      $('mapFallback').hidden = false;
+    };
     if (typeof Globe !== 'function') {
-      showHint('Could not load the 3D library (vendor/globe.gl.min.js).');
+      useFlatMap();
       return;
     }
+    // Check an isolated canvas first: unsupported WebGL must not abort the
+    // supported 2D map, live connection, demo or the rest of the dashboard.
+    try {
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('webgl2') || canvas.getContext('webgl');
+      if (!context) { useFlatMap(); return; }
+      context.getExtension('WEBGL_lose_context')?.loseContext();
+    } catch { useFlatMap(); return; }
     try {
       world = new Globe(globeEl, { animateIn: !reduceMotion, rendererConfig: { antialias: !lite, powerPreference: 'low-power' } });
     } catch {
-      world = Globe({ animateIn: !reduceMotion })(globeEl);
+      try {
+        globeEl.replaceChildren();
+        world = Globe({ animateIn: !reduceMotion })(globeEl);
+      } catch { useFlatMap(); return; }
     }
     const H = CONFIG.home;
     world
@@ -1166,6 +1189,9 @@
   const detail = { paths: null, loading: false };
 
   function applyView() {
+    // Reset settings or a programmatic selection must never hide the working
+    // flat map after 3D initialization failed on this device.
+    if (globeUnavailable) settings.view = 'flat';
     const isFlat = settings.view === 'flat';
     globeEl.hidden = isFlat; flatEl.hidden = !isFlat;
     if (!isFlat) flatTip.hidden = true;
@@ -1664,6 +1690,10 @@
   }
 
   loadConfig().then(() => {
+    // Keep the new inventory navigation in the explicit upstream demo mode.
+    for (const id of ['inventoryTreeLink', 'inventoryDevicesLink']) {
+      if (isDemo) $(id).href += '&demo';
+    }
     if (isDemo) { CONFIG.home = { lat: 50.11, lng: 8.68, label: 'Frankfurt' }; CONFIG.gateway = 'QuantumGateway'; }
     $('gwName').textContent = CONFIG.gateway;
     document.title = 'Lagezentrum' + (CONFIG.gateway ? ' · ' + CONFIG.gateway : '');
@@ -1672,6 +1702,8 @@
     applyView();
     initCountries();
     applyFilters();
+    // A stable IP-scoped hand-off from the separate controller inventory.
+    if (params.get('device')) openDossier('device', params.get('device'));
     if (isDemo) {
       startDemo();
     } else {

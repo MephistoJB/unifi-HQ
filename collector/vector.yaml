@@ -36,9 +36,9 @@ sources:
     mode: streaming
     command:
       - /usr/local/bin/goflow2
-      - "-listen=netflow://:2055?count=1&workers=1&queue_size=20000"
+      - "-listen=netflow://:${IPFIX_PORT:-2055}?count=1&workers=1&queue_size=20000"
       - -format=json
-      - -addr=127.0.0.1:8091
+      - -addr=127.0.0.1:${METRICS_PORT:-8091}
       - -loglevel=warn
     streaming:
       respawn_on_exit: true
@@ -50,7 +50,7 @@ sources:
   unifi_syslog:
     type: socket
     mode: udp
-    address: 0.0.0.0:5514
+    address: 0.0.0.0:${SYSLOG_PORT:-5514}
     max_length: 16384
 
 transforms:
@@ -367,7 +367,7 @@ sinks:
   victorialogs:
     type: elasticsearch
     inputs: [enrich]
-    endpoints: ["http://127.0.0.1:9428/insert/elasticsearch/"]
+    endpoints: ["http://127.0.0.1:${HISTORY_PORT:-9428}/insert/elasticsearch/"]
     mode: bulk
     api_version: v8
     healthcheck:
@@ -389,7 +389,7 @@ sinks:
   live:
     type: websocket_server
     inputs: [enrich]          # Anfragen und Antworten; das Dashboard ordnet die Antwort-Bytes zu
-    address: 127.0.0.1:8090
+    address: 127.0.0.1:${LIVE_PORT:-8090}
     encoding:
       codec: json
     buffer:

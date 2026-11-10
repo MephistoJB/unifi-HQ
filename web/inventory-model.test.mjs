@@ -1,0 +1,7 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {buildForest,displayStatus,matchesDevice,snapshotIsStale} from './inventory-model.mjs';
+test('stale snapshots never present cached devices as online',()=>{assert.equal(displayStatus({status:'online'},true),'unknown');assert.equal(snapshotIsStale({configured:true,last_success_at:'2020-01-01T00:00:00Z'}),true);});
+test('searching a child retains the ancestry without inventing attachments',()=>{const forest=buildForest([{id:'gateway'},{id:'switch',parent_id:'gateway'},{id:'client',parent_id:'switch'},{id:'orphan',parent_id:'missing'}],new Set(['client','orphan']));assert.equal(forest.length,2);assert.equal(forest[0].children[0].children[0].id,'client');assert.equal(forest[1].id,'orphan');});
+test('cycles and self-links terminate and remain visible',()=>{const forest=buildForest([{id:'a',parent_id:'b'},{id:'b',parent_id:'a'},{id:'c',parent_id:'c'}]);assert.equal(forest.length,3);assert.equal(forest.reduce((n,d)=>n+d.children.length,0),0);});
+test('search, class, network and status filters combine without traffic inference',()=>{const d={id:'a',name:'Büro',kind:'ap',status:'online',ip:'192.168.1.1',network:'LAN'};const filters={query:'BÜRO',kind:'infrastructure',status:'online',network:'LAN'};assert.equal(matchesDevice(d,filters,false),true);assert.equal(matchesDevice(d,filters,true),false);filters.status='unknown';assert.equal(matchesDevice(d,filters,true),true);});

@@ -1,16 +1,6 @@
-# Lagezentrum – Live-Weltkarte für UniFi-Flows
-#
-#   Start:      ./lagezentrum.sh setup   (einmalig)   danach   docker compose up -d
-#   Dashboard:  http://<LXC-IP>:8080        Demo: http://<LXC-IP>:8080/?demo
-#
-# Alle Dienste laufen im Host-Netz des LXC:
-#   - UDP 2055 (NetFlow/IPFIX) und UDP 5514 (Syslog) nehmen nur Pakete vom Gateway an
-#   - TCP 8080 (Dashboard) beantwortet nur Clients aus dem lokalen Netz, mit Login
-#   - VictoriaLogs (9428), der Live-Stream (8090) und GoFlow2-Metriken (8091)
-#     hören nur auf 127.0.0.1 und sind von außen nicht erreichbar
-# Kein Docker-NAT, kein docker-proxy, Absender-IPs bleiben erhalten.
-
-name: lagezentrum
+# UniFi HQ fork release 0.1.0. Four services plus the upstream GeoIP job.
+# On Unraid use scripts/unraid.py; Docker Compose is an optional alternative.
+name: unifi-hq
 
 x-hardening: &hardening
   network_mode: host
@@ -19,55 +9,65 @@ x-hardening: &hardening
   cap_drop: [ALL]
   security_opt: ["no-new-privileges:true"]
   logging:
-    driver: local            # Docker rotiert selbst
+    driver: local
     options:
       max-size: "5m"
       max-file: "2"
 
 services:
-  # Einmal-Job: lädt die DB-IP-Lite-Datenbanken, falls sie fehlen oder älter als 32 Tage sind
   geoip:
     <<: *hardening
     image: alpine:3.24
+    container_name: unifi-hq-geoip
     restart: "no"
-    cap_add: [DAC_OVERRIDE]
     command: ["/bin/sh", "/update.sh"]
     environment:
       GEOIP_MAX_AGE_DAYS: ${GEOIP_MAX_AGE_DAYS:-32}
     volumes:
       - ./scripts/geoip-update.sh:/update.sh:ro
-      - ./geoip:/geoip
+      - ${HQ_DATA_DIR:-./data}/geoip:/geoip
     mem_limit: 128m
 
-  # Historie: Log-Datenbank, komprimiert stark, braucht wenig RAM
   victorialogs:
     <<: *hardening
     image: victoriametrics/victoria-logs:v1.53.0
+    container_name: unifi-hq-history
     command:
-      - -httpListenAddr=127.0.0.1:9428
+      - -httpListenAddr=127.0.0.1:${HISTORY_PORT:-9428}
       - -storageDataPath=/vlogs
-      - -retentionPeriod=${RETENTION:-90d}
+      - -retentionPeriod=${RETENTION:-30d}
       - -retention.maxDiskSpaceUsageBytes=${MAX_DISK:-20GiB}
-      - -inmemoryDataFlushInterval=30s      # seltener auf die SSD schreiben
+      - -inmemoryDataFlushInterval=30s
       - -loggerLevel=WARN
       - -search.maxQueryDuration=60s
     volumes:
-      - vlogs-data:/vlogs
+      - ${HQ_DATA_DIR:-./data}/history:/vlogs
     mem_limit: 512m
+    labels:
+      net.unraid.docker.managed: dockerman
 
-  # Pipeline: GoFlow2 (eingebaut) + Syslog -> GeoIP -> VictoriaLogs + Live-Stream
   collector:
     <<: *hardening
     build: ./collector
-    image: lagezentrum-collector:local
-    env_file: .env
+    image: ${HQ_IMAGE_PREFIX:-ghcr.io/mephistojb/unifi-hq}-collector:${HQ_VERSION:-0.1.0}
+    container_name: unifi-hq-collector
     environment:
+      TZ: ${TZ:-Europe/Berlin}
       VECTOR_LOG: ${VECTOR_LOG:-warn}
-      VECTOR_THREADS: ${VECTOR_THREADS:-1}   # 1 Thread spart ~30 % CPU, reicht für >2000 Flows/s
+      VECTOR_THREADS: ${VECTOR_THREADS:-1}
+      WAN_IP: ${WAN_IP:-}
+      ALLOWED_SENDERS: ${ALLOWED_SENDERS:-127.0.0.1}
+      LOCAL_EXTRA_NETS: ${LOCAL_EXTRA_NETS:-}
+      LOCAL_SERVER_PORTS: ${LOCAL_SERVER_PORTS:-51820}
+      IGNORE_IPS: ${IGNORE_IPS:-}
+      IPFIX_PORT: ${IPFIX_PORT:-2055}
+      SYSLOG_PORT: ${SYSLOG_PORT:-5514}
+      LIVE_PORT: ${LIVE_PORT:-8090}
+      METRICS_PORT: ${METRICS_PORT:-8091}
+      HISTORY_PORT: ${HISTORY_PORT:-9428}
     volumes:
-      - ./collector/vector.yaml:/etc/vector/vector.yaml:ro
-      - ./config:/etc/vector/config:ro      # Ordner statt Datei: Änderungen der API kommen an
-      - ./geoip:/geoip:ro
+      - ${HQ_DATA_DIR:-./data}/config:/etc/vector/config:ro
+      - ${HQ_DATA_DIR:-./data}/geoip:/geoip:ro
     tmpfs:
       - /var/lib/vector:uid=65534,gid=65534,size=16m
     depends_on:
@@ -76,47 +76,63 @@ services:
       victorialogs:
         condition: service_started
     mem_limit: 384m
+    labels:
+      net.unraid.docker.managed: dockerman
 
-  # Kleine API fürs Dashboard: Login prüfen, Gerätenamen speichern (config/hosts.csv)
-  # und Vector neu laden lassen
   api:
     <<: *hardening
     build: ./api
-    image: lagezentrum-api:local
+    image: ${HQ_IMAGE_PREFIX:-ghcr.io/mephistojb/unifi-hq}-api:${HQ_VERSION:-0.1.0}
+    container_name: unifi-hq-api
     user: "0:0"
-    cap_add: [KILL]                  # nur für SIGHUP an Vector, der als nobody läuft
-    pid: "service:collector"         # sieht den Vector-Prozess
+    cap_add: [KILL]
+    # Recreate API after recreating collector: a restart retains its old PID target.
+    pid: "service:collector"
     environment:
+      TZ: ${TZ:-Europe/Berlin}
       HOSTS_FILE: /config/hosts.csv
-      LISTEN: 127.0.0.1:8092
-      AUTH_PASSWORD_HASH: ${AUTH_PASSWORD_HASH:-}   # ./lagezentrum.sh password
-      AUTH_SECRET: ${AUTH_SECRET:-}
+      LISTEN: 127.0.0.1:${API_PORT:-8092}
+      AUTH_PASSWORD_HASH_FILE: /run/secrets/auth_password_hash
+      AUTH_SECRET_FILE: /run/secrets/auth_secret
+      UNIFI_URL: ${UNIFI_URL:-}
+      UNIFI_SITE_ID: ${UNIFI_SITE_ID:-}
+      UNIFI_API_BASE_PATH: ${UNIFI_API_BASE_PATH:-/proxy/network/integration/v1}
+      UNIFI_API_KEY_FILE: /run/secrets/unifi_api_key
+      UNIFI_CA_FILE: ${UNIFI_CA_FILE:-}
+      UNIFI_POLL_SECONDS: ${UNIFI_POLL_SECONDS:-15}
+      UNIFI_STALE_SECONDS: ${UNIFI_STALE_SECONDS:-60}
+      INVENTORY_FILE: /state/inventory.json
     volumes:
-      - ./config:/config
+      - ${HQ_DATA_DIR:-./data}/config:/config
+      - ${HQ_DATA_DIR:-./data}/state:/state
+      - ${HQ_SECRETS_DIR:-./data/secrets}:/run/secrets:ro
     depends_on: [collector]
-    mem_limit: 32m
+    mem_limit: 128m
+    labels:
+      net.unraid.docker.managed: dockerman
 
-  # Webserver: Dashboard + /ws (Live) + /select (Abfragen), nur fürs lokale Netz
   caddy:
     <<: *hardening
-    image: caddy:2.11-alpine
-    cap_add: [NET_BIND_SERVICE]
+    build:
+      context: .
+      dockerfile: caddy/Dockerfile
+    image: ${HQ_IMAGE_PREFIX:-ghcr.io/mephistojb/unifi-hq}-web:${HQ_VERSION:-0.1.0}
+    container_name: unifi-hq-web
     environment:
       HTTP_PORT: ${HTTP_PORT:-8080}
+      API_PORT: ${API_PORT:-8092}
+      LIVE_PORT: ${LIVE_PORT:-8090}
+      HISTORY_PORT: ${HISTORY_PORT:-9428}
       ALLOWED_CLIENTS: ${ALLOWED_CLIENTS:-private_ranges}
       HOME_LAT: ${HOME_LAT:-50.11}
       HOME_LON: ${HOME_LON:-8.68}
       HOME_LABEL: ${HOME_LABEL:-Home}
       GATEWAY_NAME: ${GATEWAY_NAME:-Gateway}
-    volumes:
-      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
-      - ./caddy/auth:/etc/caddy/auth:ro
-      - ./web:/srv:ro
     tmpfs:
       - /data:size=1m
       - /config:size=1m
     depends_on: [collector, victorialogs, api]
     mem_limit: 64m
-
-volumes:
-  vlogs-data:
+    labels:
+      net.unraid.docker.managed: dockerman
+      net.unraid.docker.webui: http://[IP]:${HTTP_PORT:-8080}/

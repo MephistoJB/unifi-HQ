@@ -1,0 +1,23 @@
+{
+  "results": [
+    {
+      "title": "Netzwerkbaum · UniFi HQ",
+      "url": "/inventory.html",
+      "overflow": false,
+      "notice": "Die Live-Weltkarte und das Controller-Inventar haben getrennte Datenquellen. Richte die UniFi-Verbindung ein, um Geräte und Topologie zu sehen."
+    },
+    {
+      "title": "Netzwerkbaum · UniFi HQ",
+      "url": "/inventory.html",
+      "overflow": false,
+      "notice": "Demo · simulierte Geräte, Statuswerte und Verbindungen."
+    },
+    {
+      "title": "Geräte · UniFi HQ",
+      "url": "/inventory.html",
+      "overflow": false,
+      "notice": "Demo · simulierte Geräte, Statuswerte und Verbindungen."
+    }
+  ],
+  "errors": []
+}

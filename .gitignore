@@ -2,6 +2,13 @@
 /.env
 /config/hosts.csv
 /caddy/auth/*.caddy
+# Runtime state and secrets must never be committed.
+/data/
+/secrets/
+/.env.unraid
 # heruntergeladene GeoIP-Datenbanken
 /geoip/*
 !/geoip/.gitkeep
+# Local Python packaging caches
+__pycache__/
+*.py[cod]

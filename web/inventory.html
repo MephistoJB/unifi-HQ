@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="dark">
+<title>Netzwerk · UniFi HQ</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="inventory.css">
+</head>
+<body class="hq-inventory">
+<a class="hq-skip" href="#content">Zum Inhalt</a>
+<header class="hq-header">
+  <a class="hq-brand" href="./"><span class="hq-mark" aria-hidden="true">◉</span><span>UniFi <b>HQ</b><small>Dein Netzwerk. Klar verbunden.</small></span></a>
+  <nav class="hq-nav" aria-label="Hauptnavigation">
+    <a href="./" id="navLive">Live-Weltkarte</a>
+    <a href="inventory.html?view=tree" id="navTree">Netzwerkbaum</a>
+    <a href="inventory.html?view=devices" id="navDevices">Geräte</a>
+  </nav>
+  <span class="hq-connection" id="connection"><span class="hq-led"></span>Controller verbinden …</span>
+</header>
+<main id="content" class="hq-main">
+  <div class="hq-heading"><div><p class="hq-eyebrow">NETZWERKÜBERSICHT</p><h1 id="pageTitle">Alles hängt zusammen.</h1><p id="pageSubtitle">Verbindungen, Geräte und Verfügbarkeit an einem Ort.</p></div><button class="hq-button hq-refresh" id="refresh" type="button"><span aria-hidden="true">↻</span> Aktualisieren</button></div>
+  <div class="hq-notice" id="notice" role="status" aria-live="polite" hidden></div>
+  <div class="hq-metrics" aria-label="Inventarübersicht">
+    <div class="hq-metric"><span>Infrastruktur</span><strong id="metricInfrastructure">–</strong><small>Gateway, Switches & Access Points</small></div>
+    <div class="hq-metric"><span><i class="hq-led online"></i> Online</span><strong id="metricOnline">–</strong><small>Verbunden laut Controller</small></div>
+    <div class="hq-metric"><span><i class="hq-led offline"></i> Offline</span><strong id="metricOffline">–</strong><small>Aktuell nicht verbunden</small></div>
+    <div class="hq-metric"><span><i class="hq-led unknown"></i> Unbekannt</span><strong id="metricUnknown">–</strong><small>Keine aktuelle Bestätigung</small></div>
+  </div>
+  <section class="hq-workspace" aria-labelledby="workspaceTitle">
+    <div class="hq-work-head"><div><h2 id="workspaceTitle">Physische Topologie</h2><p id="inventoryMeta">Inventar wird geladen …</p></div><span class="hq-snapshot" id="snapshotTime">Noch kein Snapshot</span></div>
+    <div class="hq-toolbar">
+      <label class="hq-search"><span aria-hidden="true">⌕</span><span class="hq-sr">Name, IP oder MAC suchen</span><input type="search" id="search" placeholder="Name, IP oder MAC suchen" autocomplete="off" spellcheck="false"></label>
+      <label class="hq-select"><span>Gerätetyp</span><select id="kind"><option value="infrastructure">Infrastruktur</option><option value="all">Alle Geräte</option><option value="client">Nur Clients</option><option value="gateway">Gateways</option><option value="switch">Switches</option><option value="ap">Access Points</option></select></label>
+      <label class="hq-select"><span>Status</span><select id="statusFilter"><option value="all">Alle Status</option><option value="online">Online</option><option value="offline">Offline</option><option value="unknown">Unbekannt</option></select></label>
+      <label class="hq-select"><span>Netzwerk</span><select id="networkFilter"><option value="">Alle Netzwerke</option></select></label>
+    </div>
+    <div class="hq-results" id="results" aria-live="polite"></div>
+    <div class="hq-layout">
+      <div class="hq-primary">
+        <div id="treeTools" class="hq-tree-tools"><div class="hq-segment" aria-label="Baumdarstellung"><button type="button" id="showOutline" aria-pressed="true">Hierarchie</button><button type="button" id="showGraph" aria-pressed="false">Diagramm</button></div><div class="hq-zoom" id="zoomControls" hidden><button class="hq-button" id="zoomOut" aria-label="Diagramm verkleinern">−</button><span id="zoomValue">100 %</span><button class="hq-button" id="zoomIn" aria-label="Diagramm vergrößern">+</button><button class="hq-button" id="fit">Einpassen</button></div><button class="hq-button" id="expandAll">Alle aufklappen</button></div>
+        <div id="empty" class="hq-empty" hidden><span class="hq-empty-icon" aria-hidden="true">⌘</span><h3 id="emptyTitle">Dein Netzwerk wird geladen</h3><p id="emptyText">Die Geräte erscheinen hier, sobald der Controller antwortet.</p></div>
+        <div id="outline" class="hq-outline"></div>
+        <div id="graph" class="hq-graph" hidden tabindex="0" aria-label="Netzwerkdiagramm. Verschieben durch Ziehen, Größenänderung über die Schaltflächen."><svg id="graphSvg" role="group" aria-label="Geräte und Verbindungen"></svg></div>
+        <div id="deviceList" class="hq-device-list" hidden></div>
+        <div class="hq-legend"><span><i class="hq-led online"></i> Online</span><span><i class="hq-led offline"></i> Offline</span><span><i class="hq-led unknown"></i> Unbekannt</span><span class="hq-line-key">━━ LAN</span><span class="hq-line-key">┄ WLAN / historisch</span></div>
+      </div>
+      <aside class="hq-detail" id="desktopDetail" aria-label="Gerätedetails"></aside>
+    </div>
+  </section>
+  <div class="hq-bottom"><p><span aria-hidden="true">ⓘ</span> Kein Traffic bedeutet nicht offline. Der Status kommt aus dem Controller.</p><span>Auf Basis von <a href="https://github.com/ProfessorQuantumUniverse/unifi-HQ" target="_blank" rel="noopener">UniFi-HQ</a> · GPL-3.0</span></div>
+</main>
+<dialog class="hq-detail-dialog" id="detailDialog" aria-labelledby="dialogTitle"><div class="hq-dialog-head"><h2 id="dialogTitle">Gerätedetails</h2><button type="button" class="hq-button" id="closeDetail" aria-label="Gerätedetails schließen">✕</button></div><div id="mobileDetail"></div></dialog>
+<script type="module" src="inventory.mjs"></script>
+</body>
+</html>

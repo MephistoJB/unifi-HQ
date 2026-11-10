@@ -1,0 +1,10 @@
+.git
+.env
+.env.*
+!.env.example
+data
+secrets
+geoip/*.mmdb
+config/hosts.csv
+docs/*.png
+test-results
