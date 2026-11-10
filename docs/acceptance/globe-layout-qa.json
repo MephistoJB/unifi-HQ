@@ -1,0 +1,38 @@
+{
+  "results": [
+    {
+      "width": 810,
+      "overflow": false,
+      "headerBottom": 224.796875,
+      "leftTop": 867.1875,
+      "leftHeight": 1345.78125,
+      "rightTop": 2244.96875,
+      "rightHeight": 561.59375,
+      "statsVisible": true,
+      "panelHeaderOverlap": false
+    },
+    {
+      "width": 1080,
+      "overflow": false,
+      "headerBottom": 123,
+      "leftTop": 135,
+      "leftHeight": 655,
+      "rightTop": 135,
+      "rightHeight": 655,
+      "statsVisible": true,
+      "panelHeaderOverlap": false
+    },
+    {
+      "width": 1440,
+      "overflow": false,
+      "headerBottom": 102.59375,
+      "leftTop": 125,
+      "leftHeight": 855,
+      "rightTop": 125,
+      "rightHeight": 855,
+      "statsVisible": true,
+      "panelHeaderOverlap": false
+    }
+  ],
+  "errors": []
+}
