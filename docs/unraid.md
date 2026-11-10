@@ -81,3 +81,9 @@ Vor einem Update das vorherige Release, Image-IDs, passende Templates und Konfig
 Rollback: altes `HQ_VERSION` und die passende Konfiguration verwenden und denselben Update-Ablauf ausführen. Bei inkompatibler Datenänderung den zuvor gesicherten eigenen Zustand wiederherstellen. Bei Problemen mit Gateway-Export dessen vorherige Konfiguration wiederherstellen. `bash scripts/unraid.sh stop --apply` stoppt ausschließlich eigene Container und erhält alle Daten. Eine automatische Deinstallation, globale Docker-Bereinigung und Änderungen fremder Container sind nicht Bestandteil der Skripte.
 
 GeoIP manuell auffrischen: `bash scripts/unraid.sh geoip --apply`. Der Einmaljob nutzt nur seine eingebundene Datenablage. Im ersten Release wird kein zusätzlicher Scheduler installiert.
+
+## Release und Empfangstest
+
+Release `0.1.0` liegt als drei getrennte Images unter `ghcr.io/mephistojb/unifi-hq-{collector,api,web}:0.1.0`. Die GHCR-Pakete sind zunächst privat und dem Fork zugeordnet. Ein erneuter Abruf benötigt deshalb die Registry-Berechtigung des Eigentümers. Beim Deployment werden Anmeldedaten nur über Standard-Eingabe an Docker übergeben und dessen temporäres `DOCKER_CONFIG` im RAM anschließend entfernt. Auf dem Host wird keine dauerhafte Registry-Anmeldung eingerichtet. Alternativ lassen sich die Images aus dem entsprechenden Git-Tag lokal bauen. Unraid erhält in diesem Release keine automatische Update-Automation.
+
+`bash scripts/smoke-unraid.sh` sendet ausschließlich Loopback-Testdatagramme an IPFIX und Syslog und prüft ihre Ankunft im Verlaufsspeicher. Es entsteht kein Verkehr zu den IP-Adressen in den Test-Nutzdaten. Die synthetischen Einträge bleiben in der Historie; sie sind kein Nachweis für einen aktivierten Gateway-Export. Für den produktiven Eingang müssen weiterhin Gateway-Ziel, Absenderbeschränkung und tatsächliche Daten geprüft werden.
