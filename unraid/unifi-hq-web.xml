@@ -1,13 +1,13 @@
 <?xml version='1.0' encoding='utf-8'?>
 <Container version="2">
   <Name>unifi-hq-web</Name>
-  <Repository>ghcr.io/mephistojb/unifi-hq-web:0.1.1</Repository>
+  <Repository>ghcr.io/mephistojb/unifi-hq-web:0.2.0</Repository>
   <Registry>https://github.com/MephistoJB/unifi-HQ</Registry>
   <Network>host</Network>
   <Privileged>false</Privileged>
   <Support>https://github.com/MephistoJB/unifi-HQ/issues</Support>
   <Project>https://github.com/MephistoJB/unifi-HQ</Project>
-  <Overview>UniFi HQ: Live-Weltkarte, Netzwerkbaum und Geräteverfügbarkeit. GPL-Fork von ProfessorQuantumUniverse/unifi-HQ. Zuletzt starten, nur im freigegebenen lokalen Netz öffnen.</Overview>
+  <Overview>UniFi HQ: Live-Weltkarte, Topologie und Geräteverfügbarkeit. GPL-Fork von ProfessorQuantumUniverse/unifi-HQ. Zuletzt starten, nur im freigegebenen lokalen Netz öffnen.</Overview>
   <Category>Network:Management:</Category>
   <WebUI>http://[IP]:8080/</WebUI>
   <Icon>https://raw.githubusercontent.com/MephistoJB/unifi-HQ/main/web/favicon.svg</Icon>

@@ -8,7 +8,7 @@ RUN CGO_ENABLED=0 go build -trimpath -ldflags="-s -w" -o /lz-api .
 FROM scratch
 LABEL org.opencontainers.image.source="https://github.com/MephistoJB/unifi-HQ" \
       org.opencontainers.image.licenses="GPL-3.0" \
-      org.opencontainers.image.version="0.1.1"
+      org.opencontainers.image.version="0.2.0"
 COPY --from=build /lz-api /lz-api
 COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 ENTRYPOINT ["/lz-api"]

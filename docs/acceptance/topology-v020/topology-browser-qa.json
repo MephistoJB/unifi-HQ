@@ -1,0 +1,249 @@
+{
+  "collected_at": "2026-11-11T08:40:08.931Z",
+  "source": "fictional-demo",
+  "layouts": [
+    {
+      "label": "ipad9-portrait",
+      "width": 810,
+      "height": 1080,
+      "title": "Topologie · UniFi HQ",
+      "overflow": false,
+      "canvas": 1,
+      "graphVisible": true,
+      "physics": false,
+      "metrics": [
+        "11",
+        "68",
+        "7",
+        "6"
+      ],
+      "networkNodes": 11,
+      "networkEdges": 10,
+      "graphRect": {
+        "x": 19,
+        "y": 448.5625,
+        "width": 757,
+        "height": 600
+      }
+    },
+    {
+      "label": "ipad9-landscape",
+      "width": 1080,
+      "height": 810,
+      "title": "Topologie · UniFi HQ",
+      "overflow": false,
+      "canvas": 1,
+      "graphVisible": true,
+      "physics": false,
+      "metrics": [
+        "11",
+        "68",
+        "7",
+        "6"
+      ],
+      "networkNodes": 11,
+      "networkEdges": 10,
+      "graphRect": {
+        "x": 29,
+        "y": 390.265625,
+        "width": 1007,
+        "height": 400
+      }
+    },
+    {
+      "label": "desktop",
+      "width": 1440,
+      "height": 1000,
+      "title": "Topologie · UniFi HQ",
+      "overflow": false,
+      "canvas": 1,
+      "graphVisible": true,
+      "physics": false,
+      "metrics": [
+        "11",
+        "68",
+        "7",
+        "6"
+      ],
+      "networkNodes": 11,
+      "networkEdges": 10,
+      "graphRect": {
+        "x": 29,
+        "y": 390.265625,
+        "width": 1067,
+        "height": 590
+      }
+    }
+  ],
+  "assertions": [
+    {
+      "name": "ipad9-portrait graph default visible",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "ipad9-portrait no horizontal overflow",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "ipad9-portrait single canvas",
+      "actual": 1,
+      "expected": 1,
+      "pass": true
+    },
+    {
+      "name": "ipad9-portrait title Topologie",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "ipad9-landscape graph default visible",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "ipad9-landscape no horizontal overflow",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "ipad9-landscape single canvas",
+      "actual": 1,
+      "expected": 1,
+      "pass": true
+    },
+    {
+      "name": "ipad9-landscape title Topologie",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "desktop graph default visible",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "desktop no horizontal overflow",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "desktop single canvas",
+      "actual": 1,
+      "expected": 1,
+      "pass": true
+    },
+    {
+      "name": "desktop title Topologie",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zoom button changes graph scale",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "touch selects device and opens detail",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "refresh preserves viewport",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "clients are grouped",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "touch expands client group",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "touch pans graph",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "two finger pinch zooms",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "offline filter yields visible matches",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "search retains connected ancestor path",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "accessible hierarchy alternate",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "switch back keeps single canvas",
+      "actual": 1,
+      "expected": 1,
+      "pass": true
+    },
+    {
+      "name": "deep link reveals selected client",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "failed refresh marks all devices unknown",
+      "actual": "6",
+      "expected": "6",
+      "pass": true
+    },
+    {
+      "name": "failed refresh marks physical edges historical",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "old successful snapshot stays unknown",
+      "actual": "6",
+      "expected": "6",
+      "pass": true
+    },
+    {
+      "name": "fresh successful snapshot restores status",
+      "actual": "5",
+      "expected": "5",
+      "pass": true
+    }
+  ],
+  "errors": []
+}

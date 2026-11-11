@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <Container version="2">
   <Name>unifi-hq-collector</Name>
-  <Repository>ghcr.io/mephistojb/unifi-hq-collector:0.1.1</Repository>
+  <Repository>ghcr.io/mephistojb/unifi-hq-collector:0.2.0</Repository>
   <Registry>https://github.com/MephistoJB/unifi-HQ</Registry>
   <Network>host</Network>
   <Privileged>false</Privileged>

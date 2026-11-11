@@ -11,7 +11,7 @@ import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = Path(os.getenv('HQ_TEMPLATE_OUTPUT_DIR', str(ROOT / 'unraid')))
-VERSION = os.getenv('HQ_VERSION', '0.1.1')
+VERSION = os.getenv('HQ_VERSION', '0.2.0')
 PREFIX = os.getenv('HQ_IMAGE_PREFIX', 'ghcr.io/mephistojb/unifi-hq')
 DATA = os.getenv('HQ_DATA_DIR', '/mnt/user/appdata/unifi-hq')
 SECRETS = os.getenv('HQ_SECRETS_DIR', '/run/unifi-hq-secrets')
@@ -48,6 +48,6 @@ api_env=[('TZ',os.getenv('TZ','Europe/Berlin')),('HOSTS_FILE','/config/hosts.csv
 template('unifi-hq-api',f'{PREFIX}-api:{VERSION}','UniFi HQ Login, Gerätenamen und Controller-Inventar. Erst nach Collector starten. Secret-Verzeichnis auf dem Zielhost bereitstellen; keine Kennwörter/API-Keys in Template-Variablen eintragen.', '128m', env=api_env, paths=[('Gerätenamen',DATA+'/config','/config','rw'),('Inventar',DATA+'/state','/state','rw'),('Runtime-Secrets',SECRETS,'/run/secrets','ro')], flags=['--user=0:0','--cap-add=KILL','--pid=container:unifi-hq-collector'])
 
 web_env=[(k,PORTS[k]) for k in ('HTTP_PORT','API_PORT','LIVE_PORT','HISTORY_PORT')]+[('ALLOWED_CLIENTS',os.getenv('ALLOWED_CLIENTS','private_ranges')),('HOME_LAT',os.getenv('HOME_LAT','50.11')),('HOME_LON',os.getenv('HOME_LON','8.68')),('HOME_LABEL',os.getenv('HOME_LABEL','Home')),('GATEWAY_NAME',os.getenv('GATEWAY_NAME','Gateway'))]
-template('unifi-hq-web',f'{PREFIX}-web:{VERSION}','UniFi HQ: Live-Weltkarte, Netzwerkbaum und Geräteverfügbarkeit. GPL-Fork von ProfessorQuantumUniverse/unifi-HQ. Zuletzt starten, nur im freigegebenen lokalen Netz öffnen.', '64m', env=web_env, flags=['--tmpfs=/data:size=1m','--tmpfs=/config:size=1m'], web=True)
+template('unifi-hq-web',f'{PREFIX}-web:{VERSION}','UniFi HQ: Live-Weltkarte, Topologie und Geräteverfügbarkeit. GPL-Fork von ProfessorQuantumUniverse/unifi-HQ. Zuletzt starten, nur im freigegebenen lokalen Netz öffnen.', '64m', env=web_env, flags=['--tmpfs=/data:size=1m','--tmpfs=/config:size=1m'], web=True)
 
 template('unifi-hq-geoip','alpine:3.24','UniFi HQ GeoIP-Einmaljob. Vor dem ersten Collector-Start ausführen; bei Erfolg beendet. Autostart deaktiviert lassen. Keine Host-Paketinstallation erforderlich.', '128m', env=[('GEOIP_MAX_AGE_DAYS',os.getenv('GEOIP_MAX_AGE_DAYS','32'))], paths=[('GeoIP-Daten',DATA+'/geoip','/geoip','rw'),('GeoIP-Updateskript',SOURCE+'/scripts/geoip-update.sh','/update.sh','ro')], args=['/bin/sh','/update.sh'],oneshot=True)

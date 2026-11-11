@@ -7,4 +7,4 @@ LABEL org.opencontainers.image.title="UniFi HQ" \
       org.opencontainers.image.description="UniFi HQ traffic globe, inventory and topology" \
       org.opencontainers.image.licenses="GPL-3.0" \
       org.opencontainers.image.source="https://github.com/MephistoJB/unifi-HQ" \
-      org.opencontainers.image.version="0.1.1"
+      org.opencontainers.image.version="0.2.0"

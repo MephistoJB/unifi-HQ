@@ -1,4 +1,4 @@
-# UniFi HQ fork release 0.1.1. Four services plus the upstream GeoIP job.
+# UniFi HQ fork release 0.2.0. Four services plus the upstream GeoIP job.
 # On Unraid use scripts/unraid.py; Docker Compose is an optional alternative.
 name: unifi-hq
 
@@ -49,7 +49,7 @@ services:
   collector:
     <<: *hardening
     build: ./collector
-    image: ${HQ_IMAGE_PREFIX:-ghcr.io/mephistojb/unifi-hq}-collector:${HQ_VERSION:-0.1.1}
+    image: ${HQ_IMAGE_PREFIX:-ghcr.io/mephistojb/unifi-hq}-collector:${HQ_VERSION:-0.2.0}
     container_name: unifi-hq-collector
     environment:
       TZ: ${TZ:-Europe/Berlin}
@@ -82,7 +82,7 @@ services:
   api:
     <<: *hardening
     build: ./api
-    image: ${HQ_IMAGE_PREFIX:-ghcr.io/mephistojb/unifi-hq}-api:${HQ_VERSION:-0.1.1}
+    image: ${HQ_IMAGE_PREFIX:-ghcr.io/mephistojb/unifi-hq}-api:${HQ_VERSION:-0.2.0}
     container_name: unifi-hq-api
     user: "0:0"
     cap_add: [KILL]
@@ -116,7 +116,7 @@ services:
     build:
       context: .
       dockerfile: caddy/Dockerfile
-    image: ${HQ_IMAGE_PREFIX:-ghcr.io/mephistojb/unifi-hq}-web:${HQ_VERSION:-0.1.1}
+    image: ${HQ_IMAGE_PREFIX:-ghcr.io/mephistojb/unifi-hq}-web:${HQ_VERSION:-0.2.0}
     container_name: unifi-hq-web
     environment:
       HTTP_PORT: ${HTTP_PORT:-8080}

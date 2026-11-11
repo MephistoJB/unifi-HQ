@@ -16,7 +16,7 @@
   <a class="hq-brand" href="./"><span class="hq-mark" aria-hidden="true">◉</span><span>UniFi <b>HQ</b><small>Dein Netzwerk. Klar verbunden.</small></span></a>
   <nav class="hq-nav" aria-label="Hauptnavigation">
     <a href="./" id="navLive">Live-Weltkarte</a>
-    <a href="inventory.html?view=tree" id="navTree">Netzwerkbaum</a>
+    <a href="inventory.html?view=tree" id="navTree">Topologie</a>
     <a href="inventory.html?view=devices" id="navDevices">Geräte</a>
   </nav>
   <span class="hq-connection" id="connection"><span class="hq-led"></span>Controller verbinden …</span>
@@ -41,12 +41,12 @@
     <div class="hq-results" id="results" aria-live="polite"></div>
     <div class="hq-layout">
       <div class="hq-primary">
-        <div id="treeTools" class="hq-tree-tools"><div class="hq-segment" aria-label="Baumdarstellung"><button type="button" id="showOutline" aria-pressed="true">Hierarchie</button><button type="button" id="showGraph" aria-pressed="false">Diagramm</button></div><div class="hq-zoom" id="zoomControls" hidden><button class="hq-button" id="zoomOut" aria-label="Diagramm verkleinern">−</button><span id="zoomValue">100 %</span><button class="hq-button" id="zoomIn" aria-label="Diagramm vergrößern">+</button><button class="hq-button" id="fit">Einpassen</button></div><button class="hq-button" id="expandAll">Alle aufklappen</button></div>
+        <div id="treeTools" class="hq-tree-tools"><div class="hq-segment" aria-label="Topologiedarstellung"><button type="button" id="showGraph" aria-pressed="true">Topologie</button><button type="button" id="showOutline" aria-pressed="false">Hierarchie</button></div><label class="hq-client-toggle"><input type="checkbox" id="includeClients"> Clients anzeigen</label><label class="hq-direction"><span class="hq-sr">Ausrichtung</span><select id="graphDirection"><option value="UD">Von oben</option><option value="LR">Von links</option></select></label><div class="hq-zoom" id="zoomControls"><button class="hq-button" id="zoomOut" aria-label="Topologie verkleinern">−</button><span id="zoomValue">100 %</span><button class="hq-button" id="zoomIn" aria-label="Topologie vergrößern">+</button><button class="hq-button" id="fit">Einpassen</button></div><button class="hq-button" id="expandAll">Alle Zweige öffnen</button></div>
         <div id="empty" class="hq-empty" hidden><span class="hq-empty-icon" aria-hidden="true">⌘</span><h3 id="emptyTitle">Dein Netzwerk wird geladen</h3><p id="emptyText">Die Geräte erscheinen hier, sobald der Controller antwortet.</p></div>
         <div id="outline" class="hq-outline"></div>
-        <div id="graph" class="hq-graph" hidden tabindex="0" aria-label="Netzwerkdiagramm. Verschieben durch Ziehen, Größenänderung über die Schaltflächen."><svg id="graphSvg" role="group" aria-label="Geräte und Verbindungen"></svg></div>
+        <div id="graph" class="hq-graph" hidden aria-label="Interaktive Topologie. Geräte antippen für Details, Client-Gruppen antippen zum Aufklappen. Die alternative Hierarchie ist vollständig per Tastatur bedienbar."></div>
         <div id="deviceList" class="hq-device-list" hidden></div>
-        <div class="hq-legend"><span><i class="hq-led online"></i> Online</span><span><i class="hq-led offline"></i> Offline</span><span><i class="hq-led unknown"></i> Unbekannt</span><span class="hq-line-key">━━ LAN</span><span class="hq-line-key">┄ WLAN / historisch</span></div>
+        <div class="hq-legend"><span><i class="hq-led online"></i> Online</span><span><i class="hq-led offline"></i> Offline</span><span><i class="hq-led unknown"></i> Unbekannt</span><span class="hq-line-key">━━ LAN bestätigt</span><span class="hq-line-key">┄ WLAN / historisch / Anschlussart unbekannt</span></div>
       </div>
       <aside class="hq-detail" id="desktopDetail" aria-label="Gerätedetails"></aside>
     </div>
@@ -54,6 +54,7 @@
   <div class="hq-bottom"><p><span aria-hidden="true">ⓘ</span> Kein Traffic bedeutet nicht offline. Der Status kommt aus dem Controller.</p><span>Auf Basis von <a href="https://github.com/ProfessorQuantumUniverse/unifi-HQ" target="_blank" rel="noopener">UniFi-HQ</a> · GPL-3.0</span></div>
 </main>
 <dialog class="hq-detail-dialog" id="detailDialog" aria-labelledby="dialogTitle"><div class="hq-dialog-head"><h2 id="dialogTitle">Gerätedetails</h2><button type="button" class="hq-button" id="closeDetail" aria-label="Gerätedetails schließen">✕</button></div><div id="mobileDetail"></div></dialog>
+<script src="vendor/vis-network.min.js"></script>
 <script type="module" src="inventory.mjs"></script>
 </body>
 </html>

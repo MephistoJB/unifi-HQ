@@ -6,7 +6,7 @@ umask 077
 ROOT=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
 ACTION=${1:-preview}
 APPLY=${2:-}
-HQ_VERSION=${HQ_VERSION:-0.1.1}
+HQ_VERSION=${HQ_VERSION:-0.2.0}
 HQ_IMAGE_PREFIX=${HQ_IMAGE_PREFIX:-ghcr.io/mephistojb/unifi-hq}
 HQ_DATA_DIR=${HQ_DATA_DIR:-/mnt/user/appdata/unifi-hq}
 HQ_SECRETS_DIR=${HQ_SECRETS_DIR:-/run/unifi-hq-secrets}

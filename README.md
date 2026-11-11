@@ -1,12 +1,13 @@
 # UniFi HQ Fork für Docker und Unraid
 
-Dieser freigegebene Fork von [ProfessorQuantumUniverse/unifi-HQ](https://github.com/ProfessorQuantumUniverse/unifi-HQ) ergänzt das ursprüngliche Lagezentrum um einen Netzwerkbaum und eine Geräteübersicht mit Online-, Offline- und Unbekannt-Status. Die Weltkarte und die vorhandene Traffic-Pipeline bleiben die Grundlage. Home Assistant ist für den Betrieb nicht erforderlich.
+Dieser freigegebene Fork von [ProfessorQuantumUniverse/unifi-HQ](https://github.com/ProfessorQuantumUniverse/unifi-HQ) ergänzt das ursprüngliche Lagezentrum um eine interaktive Topologie und eine Geräteübersicht mit Online-, Offline- und Unbekannt-Status. Die Weltkarte und die vorhandene Traffic-Pipeline bleiben die Grundlage. Home Assistant ist für den Betrieb nicht erforderlich.
 
 **Die maßgebliche Installations- und Betriebsanleitung für diesen Fork ist [UniFi HQ auf Unraid](docs/unraid.md).** Für Unraid wird das vorhandene Docker verwendet; ein Compose-Plugin oder ein Unraid-Upgrade wird nicht benötigt.
 
 - Native Installation und Updates: `scripts/unraid.sh`. Ohne `--apply` zeigt das Skript eine Vorschau; es führt keine Installation aus.
 - Unraid-App-Konfiguration: die zusammengehörigen XML-Templates unter [`unraid/`](unraid/), mit eigener WebUI-Verknüpfung.
 - Alternative für Hosts mit bereits vorhandenem Compose: die aktuelle [`docker-compose.yml`](docker-compose.yml).
+- Topologie: lokal mitgeliefertes [vis-network](https://visjs.github.io/vis-network/) mit hierarchischem Graphen, Touch-/Zoom-Bedienung und zugänglicher Hierarchie als Alternative. Herkunft, feste Version und Lizenz liegen unter `web/vendor/vis-network-source.json` und `web/vendor/LICENSE-vis-network.txt`.
 - Geheimnisse werden serverseitig über geschützte Runtime-Dateien eingebunden. Keine API-Keys oder Kennwörter in Git, `.env` oder Unraid-Template-Variablen eintragen. Details und Voraussetzungen stehen in der Unraid-Anleitung.
 - Geänderte Bestandteile und Release-Verpackung dieses Forks stehen weiterhin unter der [GNU GPL Version 3](LICENSE); Urheber- und Asset-Lizenzhinweise des Originals bleiben erhalten.
 
