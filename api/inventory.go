@@ -708,36 +708,55 @@ func deviceStatus(s string) string {
 	}
 }
 func deviceKind(o apiObject) string {
+	features := map[string]bool{}
 	for _, k := range []string{"_overviewFeatures", "features", "capabilities"} {
 		if a, ok := o[k].([]any); ok {
 			for _, v := range a {
-				switch strings.ToUpper(fmt.Sprint(v)) {
-				case "GATEWAY", "ROUTING":
-					return "gateway"
-				}
-			}
-			for _, v := range a {
-				switch strings.ToUpper(fmt.Sprint(v)) {
-				case "ACCESS_POINT", "ACCESSPOINT", "WIRELESS":
-					return "ap"
-				}
-			}
-			for _, v := range a {
-				switch strings.ToUpper(fmt.Sprint(v)) {
-				case "SWITCHING", "SWITCH":
-					return "switch"
-				}
+				features[strings.ToUpper(fmt.Sprint(v))] = true
 			}
 		}
 	}
-	m := strings.ToUpper(str(o, "model"))
-	switch {
-	case strings.HasPrefix(m, "UDM"), strings.HasPrefix(m, "UCG"), strings.HasPrefix(m, "UXG"), strings.HasPrefix(m, "USG"):
+	// Gateways with integrated switching/Wi-Fi can expose only those features.
+	// Their known product model must take priority over the integrated switch.
+	m := strings.ToUpper(strings.TrimSpace(str(o, "model")))
+	if features["GATEWAY"] || features["ROUTING"] || knownGatewayModel(m) {
 		return "gateway"
+	}
+	if features["ACCESS_POINT"] || features["ACCESSPOINT"] || features["WIRELESS"] {
+		return "ap"
+	}
+	if features["SWITCHING"] || features["SWITCH"] {
+		return "switch"
+	}
+	switch {
 	case strings.HasPrefix(m, "USW"), strings.HasPrefix(m, "USMINI"), strings.HasPrefix(m, "USF"), strings.HasPrefix(m, "USL"):
 		return "switch"
 	case strings.HasPrefix(m, "UAP"), strings.HasPrefix(m, "U6"), strings.HasPrefix(m, "U7"), strings.HasPrefix(m, "UAL"):
 		return "ap"
 	}
 	return "device"
+}
+
+func knownGatewayModel(model string) bool {
+	// Accept known product identifiers as well as the human-readable model
+	// returned by newer official APIs. Never use the user-editable device name.
+	for _, prefix := range []string{"UDM", "UCG", "UXG", "USG", "UDR", "UDW", "EFG"} {
+		if strings.HasPrefix(model, prefix) {
+			return true
+		}
+	}
+	if model == "UX" || model == "UX7" {
+		return true
+	}
+	words := strings.Join(strings.FieldsFunc(model, func(r rune) bool {
+		return r == '-' || r == '_' || r == '/' || r == ' ' || r == '\t'
+	}), " ")
+	for _, family := range []string{"DREAM MACHINE", "DREAM ROUTER", "DREAM WALL", "CLOUD GATEWAY", "SECURITY GATEWAY", "FORTRESS GATEWAY"} {
+		// Word boundaries prevent accidentally matching fragments of unknown
+		// model identifiers while allowing the normal UniFi brand prefix.
+		if strings.Contains(" "+words+" ", " "+family+" ") {
+			return true
+		}
+	}
+	return false
 }

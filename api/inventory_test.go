@@ -300,3 +300,38 @@ func TestInventoryFullOfficialPollUsesOverviewClientAttachment(t *testing.T) {
 		t.Fatalf("unnecessary fan-out requests: %v", paths)
 	}
 }
+
+func TestDeviceKindIntegratedGatewayModelTakesPriority(t *testing.T) {
+	for _, model := range []string{
+		"UniFi Dream Machine PRO SE", // Actual official Network 11.0.99 response.
+		"UDMPROSE",
+		"UDM-SE",
+		"UniFi Cloud Gateway Ultra",
+		"UCG-Max",
+		"UniFi Dream Router",
+		"UDR7",
+		"UniFi Dream Wall",
+		"UniFi Security Gateway",
+	} {
+		t.Run(model, func(t *testing.T) {
+			o := apiObject{"model": model, "_overviewFeatures": []any{"switching"}, "features": map[string]any{"switching": map[string]any{}}}
+			if got := deviceKind(o); got != "gateway" {
+				t.Fatalf("integrated gateway %q classified as %s", model, got)
+			}
+		})
+	}
+	for _, tc := range []struct {
+		device apiObject
+		want   string
+	}{
+		{apiObject{"model": "USW-24", "features": []any{"switching"}}, "switch"},
+		{apiObject{"model": "U6 Pro", "features": []any{"switching", "accessPoint"}}, "ap"},
+		{apiObject{"model": "unknown future hardware"}, "device"},
+		{apiObject{"model": "unknown future hardware", "name": "Dream Machine"}, "device"},
+		{apiObject{"model": "unknown future hardware", "_overviewFeatures": []any{"switching"}, "capabilities": []any{"gateway"}}, "gateway"},
+	} {
+		if got := deviceKind(tc.device); got != tc.want {
+			t.Errorf("%v: got %s, want %s", tc.device, got, tc.want)
+		}
+	}
+}

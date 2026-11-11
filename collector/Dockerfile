@@ -16,7 +16,7 @@ RUN chmod 755 /etc/vector
 ENV VECTOR_DANGEROUSLY_ALLOW_ENV_VAR_INTERPOLATION=true
 LABEL org.opencontainers.image.source="https://github.com/MephistoJB/unifi-HQ" \
       org.opencontainers.image.licenses="GPL-3.0" \
-      org.opencontainers.image.version="0.1.0"
+      org.opencontainers.image.version="0.1.1"
 # Unprivilegierter Benutzer; die Ports 2055/5514/8090 liegen über 1024
 USER 65534:65534
 ENTRYPOINT ["/usr/local/bin/vector"]

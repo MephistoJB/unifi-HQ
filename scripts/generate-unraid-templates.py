@@ -11,7 +11,7 @@ import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = Path(os.getenv('HQ_TEMPLATE_OUTPUT_DIR', str(ROOT / 'unraid')))
-VERSION = os.getenv('HQ_VERSION', '0.1.0')
+VERSION = os.getenv('HQ_VERSION', '0.1.1')
 PREFIX = os.getenv('HQ_IMAGE_PREFIX', 'ghcr.io/mephistojb/unifi-hq')
 DATA = os.getenv('HQ_DATA_DIR', '/mnt/user/appdata/unifi-hq')
 SECRETS = os.getenv('HQ_SECRETS_DIR', '/run/unifi-hq-secrets')

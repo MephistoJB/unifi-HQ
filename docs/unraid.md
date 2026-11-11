@@ -4,14 +4,14 @@ Der Fork ergänzt [ProfessorQuantumUniverse/unifi-HQ](https://github.com/Profess
 
 ## Release und Images
 
-Erstes Fork-Release: `0.1.0`. Die drei eigenen Images heißen `ghcr.io/mephistojb/unifi-hq-api:0.1.0`, `ghcr.io/mephistojb/unifi-hq-collector:0.1.0` und `ghcr.io/mephistojb/unifi-hq-web:0.1.0`. Diese Namen allein bestätigen noch keine Veröffentlichung; vor der Installation werden lokal gebaute oder tatsächlich aus der Registry abgerufene Images geprüft.
+Aktuelles Fork-Release: `0.1.1`. Die drei eigenen Images heißen `ghcr.io/mephistojb/unifi-hq-api:0.1.1`, `ghcr.io/mephistojb/unifi-hq-collector:0.1.1` und `ghcr.io/mephistojb/unifi-hq-web:0.1.1`. Diese Namen allein bestätigen noch keine Veröffentlichung; vor der Installation werden lokal gebaute oder tatsächlich aus der Registry abgerufene Images geprüft.
 
 Build auf dem x86-64-Zielhost mit vorhandenem Docker:
 
 ```bash
-docker build -t ghcr.io/mephistojb/unifi-hq-api:0.1.0 ./api
-docker build -t ghcr.io/mephistojb/unifi-hq-collector:0.1.0 ./collector
-docker build -f caddy/Dockerfile -t ghcr.io/mephistojb/unifi-hq-web:0.1.0 .
+docker build -t ghcr.io/mephistojb/unifi-hq-api:0.1.1 ./api
+docker build -t ghcr.io/mephistojb/unifi-hq-collector:0.1.1 ./collector
+docker build -f caddy/Dockerfile -t ghcr.io/mephistojb/unifi-hq-web:0.1.1 .
 docker pull victoriametrics/victoria-logs:v1.53.0
 docker pull alpine:3.24
 ```
@@ -84,6 +84,6 @@ GeoIP manuell auffrischen: `bash scripts/unraid.sh geoip --apply`. Der Einmaljob
 
 ## Release und Empfangstest
 
-Release `0.1.0` liegt als drei getrennte Images unter `ghcr.io/mephistojb/unifi-hq-{collector,api,web}:0.1.0`. Die GHCR-Pakete sind zunächst privat und dem Fork zugeordnet. Ein erneuter Abruf benötigt deshalb die Registry-Berechtigung des Eigentümers. Beim Deployment werden Anmeldedaten nur über Standard-Eingabe an Docker übergeben und dessen temporäres `DOCKER_CONFIG` im RAM anschließend entfernt. Auf dem Host wird keine dauerhafte Registry-Anmeldung eingerichtet. Alternativ lassen sich die Images aus dem entsprechenden Git-Tag lokal bauen. Unraid erhält in diesem Release keine automatische Update-Automation.
+Release `0.1.1` liegt als drei getrennte Images unter `ghcr.io/mephistojb/unifi-hq-{collector,api,web}:0.1.1`. Die GHCR-Pakete sind zunächst privat und dem Fork zugeordnet. Ein erneuter Abruf benötigt deshalb die Registry-Berechtigung des Eigentümers. Beim Deployment werden Anmeldedaten nur über Standard-Eingabe an Docker übergeben und dessen temporäres `DOCKER_CONFIG` im RAM anschließend entfernt. Auf dem Host wird keine dauerhafte Registry-Anmeldung eingerichtet. Alternativ lassen sich die Images aus dem entsprechenden Git-Tag lokal bauen. Unraid erhält in diesem Release keine automatische Update-Automation.
 
 `bash scripts/smoke-unraid.sh` sendet ausschließlich Loopback-Testdatagramme an IPFIX und Syslog und prüft ihre Ankunft im Verlaufsspeicher. Es entsteht kein Verkehr zu den IP-Adressen in den Test-Nutzdaten. Die synthetischen Einträge bleiben in der Historie; sie sind kein Nachweis für einen aktivierten Gateway-Export. Für den produktiven Eingang müssen weiterhin Gateway-Ziel, Absenderbeschränkung und tatsächliche Daten geprüft werden.
