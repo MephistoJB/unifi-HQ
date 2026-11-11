@@ -1,5 +1,5 @@
 {
-  "collected_at": "2026-11-11T08:40:08.931Z",
+  "collected_at": "2026-11-11T08:44:53.565Z",
   "source": "fictional-demo",
   "layouts": [
     {
@@ -150,6 +150,12 @@
     },
     {
       "name": "zoom button changes graph scale",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "graph labels fit available node spacing",
       "actual": true,
       "expected": true,
       "pass": true

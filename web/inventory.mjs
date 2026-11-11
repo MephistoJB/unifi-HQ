@@ -54,7 +54,12 @@ function renderOutline(forest,matchingIds){
 }
 // Locally vendored vis-network supplies the layout and all pointer/touch handling.
 // Controller strings stay in canvas labels or textContent-only DOM tooltips.
-function shorten(text,max){text=String(text).replace(/\s+/g,' ');return text.length>max?text.slice(0,max-1)+'…':text;}
+const graphLabelContext=document.createElement('canvas').getContext('2d');
+function shorten(text,max){
+  const characters=Array.from(String(text).replace(/\s+/g,' ')),label=characters.slice(0,max);
+  if(graphLabelContext){graphLabelContext.font='14px "IBM Plex Sans Condensed"';while(label.length&&graphLabelContext.measureText(label.join('')+(label.length<characters.length?'…':'')).width>155)label.pop();}
+  return label.join('')+(label.length<characters.length?'…':'');
+}
 function deviceImage(kind,status,selected=false){
   const color=status==='online'?'#67d4a4':status==='offline'?'#ef8293':'#e8c579';
   const parts={
@@ -82,7 +87,7 @@ function renderGraph(forest,matchingIds){
   function place(d,depth,parent){
     const status=displayStatus(d,stale),isContext=!matchingIds.has(d.id),children=d.children,hidden=collapsed.has(d.id)&&children.length;
     const secondary=hidden?children.length+' direkte Verbindungen · zugeklappt':!d.parent_id&&d.kind!=='gateway'?'Anschluss nicht bekannt':d.model||kindLabels[d.kind]||'Gerät';
-    nodes.push({id:d.id,label:shorten(deviceName(d),29)+'\n'+shorten(secondary,36),level:depth,shape:'image',image:deviceImage(d.kind,status,d.id===selectedId),size:d.kind==='client'?28:37,opacity:isContext?0.48:1,font:{face:'IBM Plex Sans Condensed',size:14,color:status==='offline'?'#ed9eaa':status==='unknown'?'#dac48e':'#dce7f3',multi:false,strokeWidth:0},title:graphTooltip(d)});
+    nodes.push({id:d.id,label:shorten(deviceName(d),23)+'\n'+shorten(secondary,25),level:depth,shape:'image',image:deviceImage(d.kind,status,d.id===selectedId),size:d.kind==='client'?28:37,opacity:isContext?0.48:1,font:{face:'IBM Plex Sans Condensed',size:14,color:status==='offline'?'#ed9eaa':status==='unknown'?'#dac48e':'#dce7f3',multi:false,strokeWidth:0},title:graphTooltip(d)});
     if(parent)addEdge(parent,d.id,d);
     if(hidden)return;
     const infra=children.filter(c=>c.kind!=='client'),clients=children.filter(c=>c.kind==='client');
