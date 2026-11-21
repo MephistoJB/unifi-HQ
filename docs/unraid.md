@@ -48,6 +48,10 @@ Secret-Werte gehören weder in XML-Templates noch in `.env`, Shellargumente, Log
 
 `UNIFI_URL` muss HTTPS verwenden und zum Zertifikat passen. Die API prüft TLS. Eine eigene vertrauenswürdige CA kann als Datei im Secret-Verzeichnis bereitgestellt und über `UNIFI_CA_FILE=/run/secrets/unifi-ca.pem` eingebunden werden. Kein pauschales Abschalten der Zertifikatsprüfung. `UNIFI_SITE_ID` ist die offizielle Site-UUID, nicht der Classic-API-Name `default`; ohne explizite ID ist automatische Auswahl nur bei genau einer Site zulässig.
 
+### Betrieb ohne Login
+
+Für ausdrücklich gewünschten passwortlosen Betrieb `AUTH_PASSWORD_HASH_FILE=` in der Deployment-Umgebung setzen. Der explizit leere Wert wird an die API übergeben und verwendet deren vorhandenen Modus ohne Passwort. Die Login-Secret-Dateien bleiben geschützt erhalten; zum Reaktivieren den Wert auf `/run/secrets/auth_password_hash` setzen. Dieselbe Einstellung beim Erzeugen der Templates und beim Ausführen des Installers verwenden. In der nativen API-Vorlage muss `AUTH_PASSWORD_HASH_FILE` leer sein. Ohne explizite Einstellung bleibt der Login standardmäßig aktiv. Die Anwendung und ihre API sind im passwortlosen Modus ohne Anmeldung nutzbar.
+
 ### Start mit noch nicht eingerichteter Controller-Anbindung
 
 Der Standard verlangt einen Controller-Key und eine HTTPS-URL. Für eine ausdrücklich gewünschte Vorabinstallation der echten Oberfläche ohne diese Anbindung ist `HQ_ALLOW_UNCONFIGURED=1` vorgesehen. Das ist ausschließlich zulässig, wenn `UNIFI_URL` leer ist und im Runtime-Secret-Verzeichnis **keine** Datei `unifi_api_key` existiert. Die Login-Dateien `auth_password_hash` und `auth_secret` bleiben zwingend erforderlich und geschützt. Die Anwendung zeigt den Zustand „nicht konfiguriert“; sie behauptet keine Verbindung und verwendet weder einen Platzhalter-Key noch simulierte Live-Geräte.

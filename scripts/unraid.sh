@@ -12,6 +12,8 @@ HQ_DATA_DIR=${HQ_DATA_DIR:-/mnt/user/appdata/unifi-hq}
 HQ_SECRETS_DIR=${HQ_SECRETS_DIR:-/run/unifi-hq-secrets}
 HQ_TEMPLATE_DIR=${HQ_TEMPLATE_DIR:-/boot/config/plugins/dockerMan/templates-user}
 HQ_ALLOW_UNCONFIGURED=${HQ_ALLOW_UNCONFIGURED:-0}
+# An explicitly empty path selects the API's supported passwordless mode.
+AUTH_PASSWORD_HASH_FILE=${AUTH_PASSWORD_HASH_FILE-/run/secrets/auth_password_hash}
 UNIFI_KEY_FILE=/run/secrets/unifi_api_key
 HTTP_PORT=${HTTP_PORT:-8080}
 IPFIX_PORT=${IPFIX_PORT:-2055}
@@ -153,7 +155,7 @@ start_services() {
     --cap-add KILL --pid=container:unifi-hq-collector \
     -v "$HQ_DATA_DIR/config:/config" -v "$HQ_DATA_DIR/state:/state" \
     -v "$HQ_SECRETS_DIR:/run/secrets:ro" -e "TZ=$TZ" -e HOSTS_FILE=/config/hosts.csv \
-    -e "LISTEN=127.0.0.1:$API_PORT" -e AUTH_PASSWORD_HASH_FILE=/run/secrets/auth_password_hash \
+    -e "LISTEN=127.0.0.1:$API_PORT" -e "AUTH_PASSWORD_HASH_FILE=$AUTH_PASSWORD_HASH_FILE" \
     -e AUTH_SECRET_FILE=/run/secrets/auth_secret -e "UNIFI_API_KEY_FILE=$UNIFI_KEY_FILE" \
     -e "UNIFI_URL=${UNIFI_URL:-}" -e "UNIFI_SITE_ID=${UNIFI_SITE_ID:-}" \
     -e "UNIFI_API_BASE_PATH=${UNIFI_API_BASE_PATH:-/proxy/network/integration/v1}" \

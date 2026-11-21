@@ -92,7 +92,7 @@ services:
       TZ: ${TZ:-Europe/Berlin}
       HOSTS_FILE: /config/hosts.csv
       LISTEN: 127.0.0.1:${API_PORT:-8092}
-      AUTH_PASSWORD_HASH_FILE: /run/secrets/auth_password_hash
+      AUTH_PASSWORD_HASH_FILE: "${AUTH_PASSWORD_HASH_FILE-/run/secrets/auth_password_hash}"
       AUTH_SECRET_FILE: /run/secrets/auth_secret
       UNIFI_URL: ${UNIFI_URL:-}
       UNIFI_SITE_ID: ${UNIFI_SITE_ID:-}
