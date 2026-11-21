@@ -7,6 +7,7 @@ Dieser freigegebene Fork von [ProfessorQuantumUniverse/unifi-HQ](https://github.
 - Native Installation und Updates: `scripts/unraid.sh`. Ohne `--apply` zeigt das Skript eine Vorschau; es führt keine Installation aus.
 - Unraid-App-Konfiguration: die zusammengehörigen XML-Templates unter [`unraid/`](unraid/), mit eigener WebUI-Verknüpfung.
 - Alternative für Hosts mit bereits vorhandenem Compose: die aktuelle [`docker-compose.yml`](docker-compose.yml).
+- Weltkarte mit kompakter WAN-Leiste: öffentliche IP sowie aktuelle Upload-/Downloadraten aus einer freigegebenen lokalen UniFi-Abfrage mit dem vorhandenen API-Key.
 - Topologie: lokal mitgeliefertes [vis-network](https://visjs.github.io/vis-network/) mit hierarchischem Graphen, Touch-/Zoom-Bedienung und zugänglicher Hierarchie als Alternative. Herkunft, feste Version und Lizenz liegen unter `web/vendor/vis-network-source.json` und `web/vendor/LICENSE-vis-network.txt`.
 - Geheimnisse werden serverseitig über geschützte Runtime-Dateien eingebunden. Keine API-Keys oder Kennwörter in Git, `.env` oder Unraid-Template-Variablen eintragen. Details und Voraussetzungen stehen in der Unraid-Anleitung.
 - Geänderte Bestandteile und Release-Verpackung dieses Forks stehen weiterhin unter der [GNU GPL Version 3](LICENSE); Urheber- und Asset-Lizenzhinweise des Originals bleiben erhalten.

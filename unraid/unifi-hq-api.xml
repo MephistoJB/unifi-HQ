@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <Container version="2">
   <Name>unifi-hq-api</Name>
-  <Repository>ghcr.io/mephistojb/unifi-hq-api:0.2.0</Repository>
+  <Repository>ghcr.io/mephistojb/unifi-hq-api:0.3.0</Repository>
   <Registry>https://github.com/MephistoJB/unifi-HQ</Registry>
   <Network>host</Network>
   <Privileged>false</Privileged>
@@ -25,6 +25,7 @@
   <Config Name="UNIFI_API_KEY_FILE" Target="UNIFI_API_KEY_FILE" Default="/run/secrets/unifi_api_key" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">/run/secrets/unifi_api_key</Config>
   <Config Name="UNIFI_URL" Target="UNIFI_URL" Default="" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="false" Mask="false" />
   <Config Name="UNIFI_SITE_ID" Target="UNIFI_SITE_ID" Default="" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="false" Mask="false" />
+  <Config Name="UNIFI_LEGACY_SITE" Target="UNIFI_LEGACY_SITE" Default="default" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">default</Config>
   <Config Name="UNIFI_API_BASE_PATH" Target="UNIFI_API_BASE_PATH" Default="/proxy/network/integration/v1" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">/proxy/network/integration/v1</Config>
   <Config Name="UNIFI_CA_FILE" Target="UNIFI_CA_FILE" Default="" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="false" Mask="false" />
   <Config Name="UNIFI_POLL_SECONDS" Target="UNIFI_POLL_SECONDS" Default="15" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">15</Config>

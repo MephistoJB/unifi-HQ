@@ -4,14 +4,14 @@ Der Fork ergänzt [ProfessorQuantumUniverse/unifi-HQ](https://github.com/Profess
 
 ## Release und Images
 
-Aktuelles Fork-Release: `0.2.0`. Die drei eigenen Images heißen `ghcr.io/mephistojb/unifi-hq-api:0.2.0`, `ghcr.io/mephistojb/unifi-hq-collector:0.2.0` und `ghcr.io/mephistojb/unifi-hq-web:0.2.0`. Diese Namen allein bestätigen noch keine Veröffentlichung; vor der Installation werden lokal gebaute oder tatsächlich aus der Registry abgerufene Images geprüft.
+Aktuelles Fork-Release: `0.3.0`. Die drei eigenen Images heißen `ghcr.io/mephistojb/unifi-hq-api:0.3.0`, `ghcr.io/mephistojb/unifi-hq-collector:0.3.0` und `ghcr.io/mephistojb/unifi-hq-web:0.3.0`. Diese Namen allein bestätigen noch keine Veröffentlichung; vor der Installation werden lokal gebaute oder tatsächlich aus der Registry abgerufene Images geprüft.
 
 Build auf dem x86-64-Zielhost mit vorhandenem Docker:
 
 ```bash
-docker build -t ghcr.io/mephistojb/unifi-hq-api:0.2.0 ./api
-docker build -t ghcr.io/mephistojb/unifi-hq-collector:0.2.0 ./collector
-docker build -f caddy/Dockerfile -t ghcr.io/mephistojb/unifi-hq-web:0.2.0 .
+docker build -t ghcr.io/mephistojb/unifi-hq-api:0.3.0 ./api
+docker build -t ghcr.io/mephistojb/unifi-hq-collector:0.3.0 ./collector
+docker build -f caddy/Dockerfile -t ghcr.io/mephistojb/unifi-hq-web:0.3.0 .
 docker pull victoriametrics/victoria-logs:v1.53.0
 docker pull alpine:3.24
 ```
@@ -47,6 +47,8 @@ Das Secret-Verzeichnis wird außerhalb des Repositories auf dem Zielhost bereitg
 Secret-Werte gehören weder in XML-Templates noch in `.env`, Shellargumente, Logs oder Git. Der Installer liest nur Existenz und Rechte, keine Inhalte. Secrets können aus der bestehenden Secret-Verwaltung in ein Runtime-tmpfs bereitgestellt werden. Ein tmpfs geht beim Hostneustart verloren: vor Autostart muss die freigegebene Secret-Bereitstellung erneut erfolgt sein. Ohne lesbare konfigurierte Secret-Dateien startet die API nicht mit offenem Login. Eine zusätzliche Secret-Verwaltungsanwendung wird nicht installiert.
 
 `UNIFI_URL` muss HTTPS verwenden und zum Zertifikat passen. Die API prüft TLS. Eine eigene vertrauenswürdige CA kann als Datei im Secret-Verzeichnis bereitgestellt und über `UNIFI_CA_FILE=/run/secrets/unifi-ca.pem` eingebunden werden. Kein pauschales Abschalten der Zertifikatsprüfung. `UNIFI_SITE_ID` ist die offizielle Site-UUID, nicht der Classic-API-Name `default`; ohne explizite ID ist automatische Auswahl nur bei genau einer Site zulässig.
+
+Die WAN-Messwerte werden über die ausdrücklich freigegebene Classic-API der vorhandenen lokalen UniFi-Konsole mit ausschließlich lesenden GET-Anfragen abgefragt. Dafür wird derselbe API-Key wie für das Inventar verwendet; zusätzliche Anmeldedaten oder Dienste sind nicht erforderlich. `UNIFI_LEGACY_SITE` ist der Classic-Site-Kurzname und steht standardmäßig auf `default`. Er ist unabhängig von der offiziellen UUID in `UNIFI_SITE_ID`. Für eine andere Site muss ihr tatsächlicher Kurzname angegeben werden. Nicht verfügbare Telemetrie wird als fehlend dargestellt und nicht durch erfundene Messwerte ersetzt.
 
 ### Betrieb ohne Login
 
@@ -88,6 +90,6 @@ GeoIP manuell auffrischen: `bash scripts/unraid.sh geoip --apply`. Der Einmaljob
 
 ## Release und Empfangstest
 
-Release `0.2.0` liegt als drei getrennte Images unter `ghcr.io/mephistojb/unifi-hq-{collector,api,web}:0.2.0`. Die GHCR-Pakete sind zunächst privat und dem Fork zugeordnet. Ein erneuter Abruf benötigt deshalb die Registry-Berechtigung des Eigentümers. Beim Deployment werden Anmeldedaten nur über Standard-Eingabe an Docker übergeben und dessen temporäres `DOCKER_CONFIG` im RAM anschließend entfernt. Auf dem Host wird keine dauerhafte Registry-Anmeldung eingerichtet. Alternativ lassen sich die Images aus dem entsprechenden Git-Tag lokal bauen. Unraid erhält in diesem Release keine automatische Update-Automation.
+Release `0.3.0` liegt als drei getrennte Images unter `ghcr.io/mephistojb/unifi-hq-{collector,api,web}:0.3.0`. Die GHCR-Pakete sind zunächst privat und dem Fork zugeordnet. Ein erneuter Abruf benötigt deshalb die Registry-Berechtigung des Eigentümers. Beim Deployment werden Anmeldedaten nur über Standard-Eingabe an Docker übergeben und dessen temporäres `DOCKER_CONFIG` im RAM anschließend entfernt. Auf dem Host wird keine dauerhafte Registry-Anmeldung eingerichtet. Alternativ lassen sich die Images aus dem entsprechenden Git-Tag lokal bauen. Unraid erhält in diesem Release keine automatische Update-Automation.
 
 `bash scripts/smoke-unraid.sh` sendet ausschließlich Loopback-Testdatagramme an IPFIX und Syslog und prüft ihre Ankunft im Verlaufsspeicher. Es entsteht kein Verkehr zu den IP-Adressen in den Test-Nutzdaten. Die synthetischen Einträge bleiben in der Historie; sie sind kein Nachweis für einen aktivierten Gateway-Export. Für den produktiven Eingang müssen weiterhin Gateway-Ziel, Absenderbeschränkung und tatsächliche Daten geprüft werden.

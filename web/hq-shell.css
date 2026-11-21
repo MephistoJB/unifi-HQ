@@ -11,3 +11,14 @@ header{flex-wrap:wrap;gap:9px 12px;background:linear-gradient(var(--ink) 75%,tra
 #ticker time{grid-column:1;grid-row:1}
 #ticker li>div:not(.acts){grid-column:2;grid-row:1;min-width:0}
 @media(pointer:coarse){header .chip,header .tool,#ticker .acts button,.pen{min-height:44px;min-width:44px}}
+
+/* A compact, independent WAN telemetry row. Missing data is never idle traffic. */
+.hq-live-header{flex-wrap:wrap}
+.hq-wan-strip{order:9;flex:1 0 100%;min-width:0;display:flex;align-items:center;gap:22px;min-height:42px;padding:8px 14px;border:1px solid var(--line);border-radius:8px;background:color-mix(in srgb,var(--panel-solid) 88%,transparent)}
+.hq-wan-source{display:flex;align-items:center;gap:7px;flex-shrink:0;font-size:12px;color:var(--mute)}.hq-wan-source b{font-size:11px;font-weight:500;letter-spacing:.06em;color:var(--text)}.hq-wan-source>span:last-child{font-size:11px}.hq-wan-dot{width:6px;height:6px;border-radius:50%;background:var(--mute)}
+.hq-wan-strip[data-state=ok] .hq-wan-dot{background:var(--live)}.hq-wan-strip[data-state=partial] .hq-wan-dot,.hq-wan-strip[data-state=demo] .hq-wan-dot{background:#e9c575}.hq-wan-strip[data-state=stale] .hq-wan-dot,.hq-wan-strip[data-state=unavailable] .hq-wan-dot{background:#e59891}
+.hq-wan-values{display:flex;align-items:center;justify-content:flex-start;gap:32px;flex:1;min-width:0;margin:0}.hq-wan-values>div{display:flex;align-items:baseline;gap:10px;min-width:0}.hq-wan-values dt{font-size:12px;color:var(--mute);white-space:nowrap}.hq-wan-values dd{margin:0;font:13px/1.4 var(--mono);font-variant-numeric:tabular-nums;color:var(--text);white-space:nowrap}.hq-wan-values .hq-wan-ip{margin-right:auto}.hq-wan-ip dd{white-space:normal;overflow-wrap:anywhere}.hq-wan-down{font-size:15px;color:var(--in)}.hq-wan-up{font-size:15px;color:var(--out)}.hq-wan-values .hq-wan-unit{font:10px var(--mono);color:var(--mute)}
+@media(min-width:901px){#left,#right{top:var(--hq-panel-top,180px)}}
+@media(max-width:1200px){.hq-wan-strip{gap:16px;padding:8px 12px}.hq-wan-values{gap:22px}.hq-wan-values>div{gap:8px}.hq-wan-values dt{font-size:11px}.hq-wan-values dd{font-size:12px}}
+@media(min-width:700px) and (max-width:900px){.hq-wan-strip{gap:14px}.hq-wan-values{gap:18px}.hq-wan-source>span:last-child{max-width:90px}.hq-wan-values dt{font-size:10px}.hq-wan-values dd{font-size:11px}}
+@media(max-width:699px){.hq-wan-strip{gap:10px;align-items:flex-start}.hq-wan-source{padding-top:2px;flex-wrap:wrap;max-width:90px}.hq-wan-source>span:last-child{flex-basis:100%;padding-left:13px}.hq-wan-values{display:grid;grid-template-columns:1fr 1fr;gap:9px 16px}.hq-wan-values .hq-wan-ip{grid-column:1/-1;margin-right:0}.hq-wan-values>div{flex-wrap:wrap;gap:2px 7px}.hq-wan-values dt{font-size:10px}.hq-wan-values dd{font-size:11px}.hq-wan-values .hq-wan-unit{font-size:9px}}

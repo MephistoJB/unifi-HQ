@@ -216,6 +216,7 @@ func startInventory(mux *http.ServeMux, auth *authCfg) {
 		log.Printf("UniFi-Inventar: %s", i.configErr)
 	}
 	mux.HandleFunc("GET /api/inventory", auth.require(func(w http.ResponseWriter, r *http.Request) { jsonOut(w, http.StatusOK, i.snapshot(time.Now())) }))
+	startWANTelemetry(mux, auth, i)
 	if err == nil && c.URL != "" && c.Key != "" {
 		go i.run(context.Background())
 	}
@@ -239,7 +240,13 @@ func (i *inventory) run(ctx context.Context) {
 type apiObject map[string]any
 
 func (i *inventory) get(ctx context.Context, p string, out any) error {
-	r, err := http.NewRequestWithContext(ctx, http.MethodGet, i.cfg.URL+strings.TrimRight(i.cfg.BasePath, "/")+p, nil)
+	return i.getPath(ctx, strings.TrimRight(i.cfg.BasePath, "/")+p, out)
+}
+
+// getPath shares the verified TLS connection policy and existing API key. Callers
+// supply only fixed, escaped local API paths; no alternate host is accepted.
+func (i *inventory) getPath(ctx context.Context, path string, out any) error {
+	r, err := http.NewRequestWithContext(ctx, http.MethodGet, i.cfg.URL+path, nil)
 	if err != nil {
 		return errors.New("UniFi-Anfrage kann nicht erstellt werden")
 	}

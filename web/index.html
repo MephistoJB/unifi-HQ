@@ -15,7 +15,7 @@
 <canvas id="flat" hidden role="img" aria-label="Flat world map with live connections"></canvas>
 <div class="flat-tip float-tooltip-kap" id="flatTip" hidden></div>
 
-<header>
+<header class="hq-live-header">
   <h1>UniFi HQ<small id="gwName"></small></h1>
   <nav class="hq-live-nav" aria-label="Hauptnavigation"><a href="./" aria-current="page">Weltkarte</a><a href="inventory.html?view=tree" id="inventoryTreeLink">Topologie</a><a href="inventory.html?view=devices" id="inventoryDevicesLink">Geräte</a></nav>
   <div class="status" id="status" data-state="connecting"><span class="dot"></span><span id="statusText">Connecting …</span></div>
@@ -80,6 +80,14 @@
     <div class="opt account" id="logoutRow" hidden><button type="button" class="tool" id="logout">Log out</button><small>Logs out this browser only.</small></div>
   </div>
   <div class="clock" id="clock">--:--:--</div>
+  <section class="hq-wan-strip" id="wanStrip" aria-label="Aktuelle Internetverbindung" data-state="loading">
+    <div class="hq-wan-source"><span class="hq-wan-dot" aria-hidden="true"></span><b>WAN</b><span id="wanState" role="status" aria-live="polite">Wird geladen</span></div>
+    <dl class="hq-wan-values">
+      <div class="hq-wan-ip"><dt>Externe IP</dt><dd><bdi id="wanIp">—</bdi></dd></div>
+      <div><dt><span class="hq-wan-down" aria-hidden="true">↓</span> Download</dt><dd><span id="wanDownload">—</span> <span class="hq-wan-unit">Mbit/s</span></dd></div>
+      <div><dt><span class="hq-wan-up" aria-hidden="true">↑</span> Upload</dt><dd><span id="wanUpload">—</span> <span class="hq-wan-unit">Mbit/s</span></dd></div>
+    </dl>
+  </section>
   <span class="hq-map-fallback" id="mapFallback" role="status" hidden></span>
 </header>
 
@@ -298,5 +306,6 @@
 
 <script src="vendor/globe.gl.min.js"></script>
 <script src="app.js"></script>
+<script type="module" src="wan.mjs"></script>
 </body>
 </html>

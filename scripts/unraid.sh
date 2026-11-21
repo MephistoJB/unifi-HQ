@@ -6,7 +6,7 @@ umask 077
 ROOT=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
 ACTION=${1:-preview}
 APPLY=${2:-}
-HQ_VERSION=${HQ_VERSION:-0.2.0}
+HQ_VERSION=${HQ_VERSION:-0.3.0}
 HQ_IMAGE_PREFIX=${HQ_IMAGE_PREFIX:-ghcr.io/mephistojb/unifi-hq}
 HQ_DATA_DIR=${HQ_DATA_DIR:-/mnt/user/appdata/unifi-hq}
 HQ_SECRETS_DIR=${HQ_SECRETS_DIR:-/run/unifi-hq-secrets}
@@ -158,6 +158,7 @@ start_services() {
     -e "LISTEN=127.0.0.1:$API_PORT" -e "AUTH_PASSWORD_HASH_FILE=$AUTH_PASSWORD_HASH_FILE" \
     -e AUTH_SECRET_FILE=/run/secrets/auth_secret -e "UNIFI_API_KEY_FILE=$UNIFI_KEY_FILE" \
     -e "UNIFI_URL=${UNIFI_URL:-}" -e "UNIFI_SITE_ID=${UNIFI_SITE_ID:-}" \
+    -e "UNIFI_LEGACY_SITE=${UNIFI_LEGACY_SITE:-default}" \
     -e "UNIFI_API_BASE_PATH=${UNIFI_API_BASE_PATH:-/proxy/network/integration/v1}" \
     -e "UNIFI_CA_FILE=${UNIFI_CA_FILE:-}" -e "UNIFI_POLL_SECONDS=${UNIFI_POLL_SECONDS:-15}" \
     -e "UNIFI_STALE_SECONDS=${UNIFI_STALE_SECONDS:-60}" -e INVENTORY_FILE=/state/inventory.json \

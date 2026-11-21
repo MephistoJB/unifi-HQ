@@ -1,0 +1,389 @@
+{
+  "at": "2026-11-21T19:53:28.695Z",
+  "source": "fictional-demo-and-fixtures",
+  "layouts": [
+    {
+      "width": 810,
+      "height": 1080,
+      "label": "ipad9-portrait",
+      "overflow": false,
+      "header": {
+        "x": 0,
+        "y": 0,
+        "right": 795,
+        "bottom": 296.796875,
+        "width": 795,
+        "height": 296.796875
+      },
+      "strip": {
+        "x": 16,
+        "y": 218.796875,
+        "right": 779,
+        "bottom": 260.796875,
+        "width": 763,
+        "height": 42
+      },
+      "values": [
+        {
+          "x": 113.9375,
+          "y": 232.09375,
+          "right": 243.703125,
+          "bottom": 247.484375,
+          "width": 129.765625,
+          "height": 15.390625
+        },
+        {
+          "x": 490.03125,
+          "y": 229.296875,
+          "right": 628.21875,
+          "bottom": 250.296875,
+          "width": 138.1875,
+          "height": 21
+        },
+        {
+          "x": 646.21875,
+          "y": 229.296875,
+          "right": 766,
+          "bottom": 250.296875,
+          "width": 119.78125,
+          "height": 21
+        }
+      ],
+      "panels": [
+        {
+          "x": 16,
+          "y": 939.1875,
+          "right": 779,
+          "bottom": 2127,
+          "width": 763,
+          "height": 1187.8125
+        },
+        {
+          "x": 16,
+          "y": 2159,
+          "right": 779,
+          "bottom": 2720.59375,
+          "width": 763,
+          "height": 561.59375
+        }
+      ],
+      "state": "demo",
+      "ip": "203.0.113.42",
+      "download": "42,35",
+      "upload": "8,17"
+    },
+    {
+      "width": 1080,
+      "height": 810,
+      "label": "ipad9-landscape",
+      "overflow": false,
+      "header": {
+        "x": 0,
+        "y": 0,
+        "right": 1080,
+        "bottom": 194,
+        "width": 1080,
+        "height": 194
+      },
+      "strip": {
+        "x": 20,
+        "y": 114,
+        "right": 1060,
+        "bottom": 156,
+        "width": 1040,
+        "height": 42
+      },
+      "values": [
+        {
+          "x": 119.9375,
+          "y": 126.59375,
+          "right": 261.171875,
+          "bottom": 143.390625,
+          "width": 141.234375,
+          "height": 16.796875
+        },
+        {
+          "x": 753.03125,
+          "y": 124.5,
+          "right": 899.125,
+          "bottom": 145.5,
+          "width": 146.09375,
+          "height": 21
+        },
+        {
+          "x": 921.125,
+          "y": 124.5,
+          "right": 1047,
+          "bottom": 145.5,
+          "width": 125.875,
+          "height": 21
+        }
+      ],
+      "panels": [
+        {
+          "x": 20,
+          "y": 206,
+          "right": 270,
+          "bottom": 790,
+          "width": 250,
+          "height": 584
+        },
+        {
+          "x": 775,
+          "y": 206,
+          "right": 1060,
+          "bottom": 790,
+          "width": 285,
+          "height": 584
+        }
+      ],
+      "state": "demo",
+      "ip": "203.0.113.42",
+      "download": "42,35",
+      "upload": "8,17"
+    },
+    {
+      "width": 1440,
+      "height": 1000,
+      "label": "desktop",
+      "overflow": false,
+      "header": {
+        "x": 0,
+        "y": 0,
+        "right": 1440,
+        "bottom": 145,
+        "width": 1440,
+        "height": 145
+      },
+      "strip": {
+        "x": 20,
+        "y": 65,
+        "right": 1420,
+        "bottom": 107,
+        "width": 1400,
+        "height": 42
+      },
+      "values": [
+        {
+          "x": 127.9375,
+          "y": 76.90625,
+          "right": 282.625,
+          "bottom": 95.09375,
+          "width": 154.6875,
+          "height": 18.1875
+        },
+        {
+          "x": 1083.03125,
+          "y": 75.40625,
+          "right": 1239.015625,
+          "bottom": 96.59375,
+          "width": 155.984375,
+          "height": 21.1875
+        },
+        {
+          "x": 1271.015625,
+          "y": 75.40625,
+          "right": 1405,
+          "bottom": 96.59375,
+          "width": 133.984375,
+          "height": 21.1875
+        }
+      ],
+      "panels": [
+        {
+          "x": 20,
+          "y": 157,
+          "right": 320,
+          "bottom": 980,
+          "width": 300,
+          "height": 823
+        },
+        {
+          "x": 1030,
+          "y": 157,
+          "right": 1420,
+          "bottom": 980,
+          "width": 390,
+          "height": 823
+        }
+      ],
+      "state": "demo",
+      "ip": "203.0.113.42",
+      "download": "42,35",
+      "upload": "8,17"
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "label": "desktop-wide",
+      "overflow": false,
+      "header": {
+        "x": 0,
+        "y": 0,
+        "right": 1920,
+        "bottom": 145,
+        "width": 1920,
+        "height": 145
+      },
+      "strip": {
+        "x": 20,
+        "y": 65,
+        "right": 1900,
+        "bottom": 107,
+        "width": 1880,
+        "height": 42
+      },
+      "values": [
+        {
+          "x": 127.9375,
+          "y": 76.90625,
+          "right": 282.625,
+          "bottom": 95.09375,
+          "width": 154.6875,
+          "height": 18.1875
+        },
+        {
+          "x": 1563.03125,
+          "y": 75.40625,
+          "right": 1719.015625,
+          "bottom": 96.59375,
+          "width": 155.984375,
+          "height": 21.1875
+        },
+        {
+          "x": 1751.015625,
+          "y": 75.40625,
+          "right": 1885,
+          "bottom": 96.59375,
+          "width": 133.984375,
+          "height": 21.1875
+        }
+      ],
+      "panels": [
+        {
+          "x": 20,
+          "y": 157,
+          "right": 320,
+          "bottom": 1060,
+          "width": 300,
+          "height": 903
+        },
+        {
+          "x": 1510,
+          "y": 157,
+          "right": 1900,
+          "bottom": 1060,
+          "width": 390,
+          "height": 903
+        }
+      ],
+      "state": "demo",
+      "ip": "203.0.113.42",
+      "download": "42,35",
+      "upload": "8,17"
+    }
+  ],
+  "checks": [
+    {
+      "name": "ipad9-portrait no horizontal overflow",
+      "pass": true
+    },
+    {
+      "name": "ipad9-portrait WAN row visible",
+      "pass": true
+    },
+    {
+      "name": "ipad9-portrait values contained",
+      "pass": true
+    },
+    {
+      "name": "ipad9-portrait values do not overlap",
+      "pass": true
+    },
+    {
+      "name": "ipad9-portrait WAN available",
+      "pass": true
+    },
+    {
+      "name": "ipad9-landscape no horizontal overflow",
+      "pass": true
+    },
+    {
+      "name": "ipad9-landscape WAN row visible",
+      "pass": true
+    },
+    {
+      "name": "ipad9-landscape values contained",
+      "pass": true
+    },
+    {
+      "name": "ipad9-landscape values do not overlap",
+      "pass": true
+    },
+    {
+      "name": "ipad9-landscape panels below header",
+      "pass": true
+    },
+    {
+      "name": "ipad9-landscape WAN available",
+      "pass": true
+    },
+    {
+      "name": "desktop no horizontal overflow",
+      "pass": true
+    },
+    {
+      "name": "desktop WAN row visible",
+      "pass": true
+    },
+    {
+      "name": "desktop values contained",
+      "pass": true
+    },
+    {
+      "name": "desktop values do not overlap",
+      "pass": true
+    },
+    {
+      "name": "desktop panels below header",
+      "pass": true
+    },
+    {
+      "name": "desktop WAN available",
+      "pass": true
+    },
+    {
+      "name": "desktop-wide no horizontal overflow",
+      "pass": true
+    },
+    {
+      "name": "desktop-wide WAN row visible",
+      "pass": true
+    },
+    {
+      "name": "desktop-wide values contained",
+      "pass": true
+    },
+    {
+      "name": "desktop-wide values do not overlap",
+      "pass": true
+    },
+    {
+      "name": "desktop-wide panels below header",
+      "pass": true
+    },
+    {
+      "name": "desktop-wide WAN available",
+      "pass": true
+    },
+    {
+      "name": "actual zero distinct from missing",
+      "pass": true
+    },
+    {
+      "name": "stale values display dashes",
+      "pass": true
+    }
+  ],
+  "errors": []
+}

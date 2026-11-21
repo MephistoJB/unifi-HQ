@@ -18,6 +18,16 @@ The extension polls only documented **GET** endpoints of the local UniFi Network
 
 The existing authentication additionally supports `AUTH_PASSWORD_HASH_FILE` and `AUTH_SECRET_FILE`. An explicitly configured but unreadable secret file fails closed; it never silently disables login.
 
+### Approved WAN telemetry extension
+
+`GET /api/wan` uses the same application authentication. A separate in-process poller reuses the existing TLS-verified local origin and API key to read only `/proxy/network/api/s/{legacySite}/stat/device/{gatewayMAC}`. `UNIFI_LEGACY_SITE` defaults to `default` and identifies the classic site shortname, independently of the official `UNIFI_SITE_ID` UUID. The gateway MAC is discovered from the inventory, never hardcoded.
+
+The response contains `configured`, `status`, `stale`, nullable `public_ip`, `upload_bps`, `download_bps`, `sampled_at`, `last_success_at`, `last_attempt_at`, `active_interface`, `source`, `poll_interval_seconds` and `stale_after_seconds`. `source` is `unifi_local_classic`; states are `ok`, `partial`, `loading`, `unconfigured`, `unavailable`, `error` or `stale`.
+
+Public IP comes exclusively from a uniquely identified live `active_geo_info` entry, excluding addresses explicitly marked inactive in `last_wan_interfaces`. The private `wan1.ip` is not a public-IP fallback. Rates come from the uniquely active (`up` and `is_uplink`) WAN's `tx_bytes-r` and `rx_bytes-r`, converted from verified bytes/second to upload/download bits/second. Missing/null/invalid fields remain unavailable; actual numeric zero represents measured idle traffic. More than one active WAN or more than one gateway is reported as unavailable instead of silently aggregating or choosing one.
+
+Measurement freshness uses the gateway's `last_seen` timestamp. An HTTP success does not make an old sample current. Last-known values may remain in the JSON with `stale: true`; the frontend must hide them or explicitly mark them stale. WAN failures never change inventory freshness or device status. There are no new credentials, external IP-lookup calls, services, ports or runtime dependencies. WAN metrics are memory-only and not restored as live values after a restart.
+
 Controller responses, credentials and private URLs are not included in logs or frontend errors. HTTP redirects are not followed, so a redirect cannot forward an API key to another origin. The API image includes the standard CA certificate bundle.
 
 ## Frontend endpoint
