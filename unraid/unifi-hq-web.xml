@@ -11,7 +11,7 @@
   <Category>Network:Management:</Category>
   <WebUI>http://[IP]:8080/</WebUI>
   <Icon>https://raw.githubusercontent.com/MephistoJB/unifi-HQ/main/web/favicon.svg</Icon>
-  <ExtraParams>--read-only --cap-drop=ALL --security-opt=no-new-privileges:true --restart=unless-stopped --log-driver=local --log-opt=max-size=5m --log-opt=max-file=2 --label=io.unifi-hq.stack=unifi-hq --memory=64m --tmpfs=/data:size=1m --tmpfs=/config:size=1m</ExtraParams>
+  <ExtraParams>--read-only --cap-drop=ALL --security-opt=no-new-privileges:true --restart=unless-stopped --log-driver=local --log-opt=max-size=5m --log-opt=max-file=2 --label=io.unifi-hq.stack=unifi-hq --memory=128m --tmpfs=/data:size=1m --tmpfs=/config:size=1m</ExtraParams>
   <PostArgs />
   <TemplateURL>https://raw.githubusercontent.com/MephistoJB/unifi-HQ/main/unraid/unifi-hq-web.xml</TemplateURL>
   <Config Name="HTTP_PORT" Target="HTTP_PORT" Default="8080" Mode="" Description="No secret values; runtime configuration only." Type="Variable" Display="always" Required="true" Mask="false">8080</Config>

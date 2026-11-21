@@ -160,7 +160,7 @@ start_services() {
     -e "UNIFI_CA_FILE=${UNIFI_CA_FILE:-}" -e "UNIFI_POLL_SECONDS=${UNIFI_POLL_SECONDS:-15}" \
     -e "UNIFI_STALE_SECONDS=${UNIFI_STALE_SECONDS:-60}" -e INVENTORY_FILE=/state/inventory.json \
     "$HQ_IMAGE_PREFIX-api:$HQ_VERSION"
-  run docker run -d --name unifi-hq-web "${common[@]}" --memory 64m \
+  run docker run -d --name unifi-hq-web "${common[@]}" --memory 128m \
     --tmpfs /data:size=1m --tmpfs /config:size=1m \
     --label "net.unraid.docker.webui=http://[IP]:$HTTP_PORT/" \
     --label "net.unraid.docker.icon=https://raw.githubusercontent.com/MephistoJB/unifi-HQ/main/web/favicon.svg" \

@@ -132,7 +132,7 @@ services:
       - /data:size=1m
       - /config:size=1m
     depends_on: [collector, victorialogs, api]
-    mem_limit: 64m
+    mem_limit: 128m
     labels:
       net.unraid.docker.managed: dockerman
       net.unraid.docker.webui: http://[IP]:${HTTP_PORT:-8080}/

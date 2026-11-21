@@ -34,7 +34,7 @@ Vorgeschlagenes Appdata-Verzeichnis: `/mnt/user/appdata/unifi-hq`. Darunter lieg
 
 Host-Netzwerk erhält die IPFIX-Absenderadresse. Vor Installation und vor Änderungen Ports prüfen. Abweichende Ports sind über `HTTP_PORT`, `IPFIX_PORT`, `SYSLOG_PORT`, `LIVE_PORT`, `METRICS_PORT`, `API_PORT`, `HISTORY_PORT` konfigurierbar und müssen in allen betroffenen Templates konsistent sein. Der Standard `ALLOWED_SENDERS=127.0.0.1` nimmt zunächst keine externen Gateway-Daten an; kein fehlender Traffic wird als erfolgreicher Empfang ausgegeben.
 
-Arbeitsspeicherlimits: Verlauf 512 MiB, Collector 384 MiB, API 128 MiB, Web 64 MiB. Der GeoIP-Job erhält vorübergehend 128 MiB. Verlauf standardmäßig 30 Tage bzw. 20 GiB, je nachdem welche Grenze zuerst erreicht wird. Dies sind anfängliche Limits, keine gemessenen Lastwerte.
+Arbeitsspeicherlimits: Verlauf 512 MiB, Collector 384 MiB, API 128 MiB, Web 128 MiB. Der GeoIP-Job erhält vorübergehend 128 MiB. Verlauf standardmäßig 30 Tage bzw. 20 GiB, je nachdem welche Grenze zuerst erreicht wird. Dies sind anfängliche Limits, keine gemessenen Lastwerte.
 
 ## Geschützte Runtime-Secrets
 
